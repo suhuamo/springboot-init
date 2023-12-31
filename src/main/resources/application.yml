@@ -1,0 +1,66 @@
+# 服务端配置
+server:
+  # 端口配置
+  port: 8888
+
+# spring内置配置
+spring:
+  #数据源配置
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/online_ide?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&
+    driver‐class‐name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# mybatis-plus配置
+mybatis-plus:
+  configuration:
+    # 日志输出方式
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 自动驼峰命名
+    map-underscore-to-camel-case: true
+  # .xml 文件的映射位置，不写会报错
+  mapper-locations: classpath:com/suhuamo/init/mapper/*.xml
+  # 全局策略配置
+  global-config:
+    db-config:
+      # 设置忽略表名前缀
+      table-prefix: tbl_
+      # 逻辑删除的实体字段名--即java的字段
+      logic-delete-field: deleteFlag
+      # 逻辑已删除的默认值：1
+      logic-delete-value: 1
+      # 逻辑未删除的默认值：1
+      logic-not-delete-value: 0
+      # 主键自动生成
+      id-type: AUTO
+      # 更新时默认忽略参数值为null对应的字段，即不更新java的null字段对应的数据库表字段
+      update-strategy: NOT_NULL
+  # 别名
+  type-aliases-package: com/suhuamo/init/pojo
+
+# springdoc-openapi项目配置
+knife4j:
+  enable: true
+  openapi:
+    title: Knife4j官方文档
+    description: "`我是测试`,**你知道吗**"
+    email: xiaoymin@foxmail.com
+    concat: 八一菜刀
+    url: https://docs.xiaominfo.com
+    version: v4.0
+    license: Apache 2.0
+    license-url: https://stackoverflow.com/
+    terms-of-service-url: https://stackoverflow.com/
+    group:
+      test1:
+        group-name: 分组名称
+        api-rule: package
+        api-rule-resources:
+          - com.suhuamo.init.controller
+# 日志文件记录
+logging:
+  file:
+    # 配置日志文件生成地址
+    name: logs\spring.log

@@ -1,0 +1,122 @@
+package ${package.ServiceImpl};
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
+import java.util.List;
+import java.util.stream.Collectors;
+import ${superServiceImplClassPackage};
+import ${package.Entity}.${entity};
+import ${package.Entity}.dto.${table.entityPath}.*;
+import ${package.Entity}.vo.${entity}VO;
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import com.suhuamo.init.constant.CommonConstant;
+import com.suhuamo.init.enums.CodeEnum;
+import com.suhuamo.init.exception.CustomException;
+/**
+ * <p>
+ * $!{table.comment} 业务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+    @Autowired
+    ${table.mapperName} ${table.entityPath}Mapper;
+
+
+    @Override
+    public void validAddData(${entity}AddDTO ${table.entityPath}AddDTO) {
+        // 1. 如姓名不能长度不能小于20，可使用注解校验
+    }
+
+    @Override
+    public void validUpdateData(${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
+        // 1. 如id不能为空，可以使用注解校验
+        if(${table.entityPath}UpdateDTO.getId() == null) {
+            throw new CustomException(CodeEnum.PARAM_ERROR);
+        }
+        // 2. 其他校验
+    }
+
+    @Override
+    public void validQueryData(${entity}QueryDTO ${table.entityPath}QueryDTO) {
+        long pageSize = ${table.entityPath}QueryDTO.getPageSize();
+        // 1. 每次查询数量不可大于限定数量，可使用注解校验
+        if(pageSize >= CommonConstant.PAGE_DATA_MAX_LIMIT) {
+             ${table.entityPath}QueryDTO.setPageSize(CommonConstant.PAGE_DATA_MAX_LIMIT);
+        }
+        // 2. 其他校验
+    }
+
+    @Override
+    public Wrapper getQueryWrapper(${entity}QueryDTO ${table.entityPath}QueryDTO) {
+        // 1. 创建 Wrapper 对象
+        LambdaQueryWrapper<${entity}> ${table.entityPath}LambdaQueryWrapper = Wrappers.lambdaQuery(${entity}.class);
+        // 2. 进行条件拼接,如 name like xx, age = xxx
+        // 3. 返回数据
+        return ${table.entityPath}LambdaQueryWrapper;
+    }
+
+    @Override
+    public Boolean idExists(Integer id) {
+        // 1. 查询数据
+        ${entity} ${table.entityPath} = ${table.entityPath}Mapper.selectById(id);
+        // 2. 返回结果
+        if(${table.entityPath} == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public Page<${entity}VO> pageToVo(Page<${entity}> ${table.entityPath}Page) {
+        return (Page<${entity}VO>) ${table.entityPath}Page.convert(this::poToVo);
+    }
+
+    @Override
+    public ${entity} addDtoToPo(${entity}AddDTO ${table.entityPath}AddDTO) {
+        // 1. 创建实体
+        ${entity} ${table.entityPath} = new ${entity}();
+        // 2. 基础参数复制
+        BeanUtils.copyProperties(${table.entityPath}AddDTO, ${table.entityPath});
+        // 3. 其他业务参数处理后set
+        return ${table.entityPath};
+    }
+
+    @Override
+    public ${entity} updateDtoToPo(${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
+        // 1. 创建实体
+        ${entity} ${table.entityPath} = new ${entity}();
+        // 2. 基础参数复制
+        BeanUtils.copyProperties(${table.entityPath}UpdateDTO, ${table.entityPath});
+        // 3. 其他业务参数处理后set
+        return ${table.entityPath};
+    }
+
+    @Override
+    public ${entity}VO poToVo(${entity} ${table.entityPath}) {
+        // 1. 创建实体
+        ${entity}VO ${table.entityPath}VO = new ${entity}VO();
+        // 2. 基础参数复制
+        BeanUtils.copyProperties(${table.entityPath}, ${table.entityPath}VO);
+        // 3. 其他业务参数处理后set
+        return ${table.entityPath}VO;
+    }
+
+
+    @Override
+    public List<${entity}VO> poToVo(List<${entity}> ${table.entityPath}List) {
+        return ${table.entityPath}List.stream().map(this::poToVo).collect(Collectors.toList());
+    }
+
+}
