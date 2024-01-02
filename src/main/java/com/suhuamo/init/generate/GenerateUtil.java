@@ -2,8 +2,8 @@ package com.suhuamo.init.generate;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
-import com.suhuamo.util.file.FileUtil;
-import com.suhuamo.util.thread.ThreadPoolUtil;
+import com.suhuamo.init.util.FileUtil;
+import com.suhuamo.init.util.ThreadPoolUtil;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author yuanchuncheng
  * @slogan 耐心等，太阳总会升起来的。
- * @date 2023-12-29
+ * @date 2023-12-31
  * @description
  * 自动生成器工具类
  */

@@ -156,16 +156,6 @@
             <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
-        <!--  util工具类      -->
-        <dependency>
-            <groupId>com.suhuamo</groupId>
-            <artifactId>util</artifactId>
-            <version>1.0.0</version>
-            <!-- 配置为system，在本地lib中找依赖， 而不会去仓库找依赖 -->
-            <scope>system</scope>
-            <!-- 本地jar包所在路径 -->
-            <systemPath>${basedir}/lib/suhuamo-util.jar</systemPath>
-        </dependency>
     </dependencies>
 
     <build>
@@ -178,6 +168,8 @@
                 <configuration>
                     <!-- 打包本地lib文件jar包 -->
                     <includeSystemScope>true</includeSystemScope>
+                    <!--  配置为其他项目可依赖jar                  -->
+                    <classifier>exec</classifier>
                 </configuration>
             </plugin>
         </plugins>
