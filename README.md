@@ -3,35 +3,100 @@
 #### 介绍
 springboot的初始化项目，带有CRUD的代码生成器，也带有基础的配置，如mybaits的分页配置，cros的跨域的配置，jwt的认证配置等。
 
-#### 软件架构
-软件架构说明
+# 使用教程
+## 一、只用于生成CRUD代码
+### 1. 创建一个空的maven项目
+### 2. 在pom.xml中配置依赖
+```xml
+<!--生成CRUD代码依赖-->
+ <dependency>
+    <groupId>com.suhuamo</groupId>
+    <artifactId>springboot-init</artifactId>
+    <version>1.0</version>
+</dependency>
+<!--以下四个依赖是用于自动生成代码的而外依赖-->
+<!--        mybatis-plus启动器 -->
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-boot-starter</artifactId>
+    <version>3.5.3</version>
+</dependency>
+<!--        mybatis-plus代码自动生成器 -->
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-generator</artifactId>
+    <version>3.5.3</version>
+</dependency>
+<!--  配合mybatis-plus代码自动生成器使用      -->
+<dependency>
+    <groupId>org.apache.velocity</groupId>
+    <artifactId>velocity-engine-core</artifactId>
+    <version>2.2</version>
+</dependency>
+<!--        mysql驱动 -->
+<dependency>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+    <version>8.0.31</version>
+</dependency>
+```
+### 3. 创建运行类，配置参数然后运行
+```java
+package com.suhuamo.test;
+import java.io.IOException;
+
+import java.util.Arrays;
+
+import com.suhuamo.init.generate.GenerateProperties;
+import com.suhuamo.init.generate.GenerateUtil;
+
+/**
+ * @author yuanchuncheng
+ * @slogan 巨人给你鞠躬，是为了让阳光也照射到你。
+ * @date 2023-12-27
+ * @description
+ */
+public class Main {
+    public static void main(String[] args) throws IOException {
+        GenerateProperties generateProperties = new GenerateProperties();
+//        数据库地址配置
+        generateProperties.setUrl("jdbc:mysql://localhost:3306/temp_ycc?userUnicode=true&characterEncoding=utf8&serverTimezone=UTC&nullCatalogMeansCurrent=true");
+//        数据库账号
+        generateProperties.setUsername("root");
+//        数据库密码
+        generateProperties.setPassword("");
+//        生成代码的包名
+        generateProperties.setParent("org.yscz.demo");
+//        需要生成代码的表名
+        generateProperties.setTables(Arrays.asList(new String[]{"tbl_person"}));
+//        生成的PO对象需要忽略的前缀
+        generateProperties.setTablePrefix(Arrays.asList(new String[]{"tbl_"}));
+//        执行生成代码方法
+        GenerateUtil.generatorCode(generateProperties);
+    }
+}
+```
+### 4.点击运行即可生成代码
+#### 1.生成前结构
+![生成前.png](assert/img1.png)
+#### 2.生成后结构
+![生成后.png](assert/img2.png)
+
+### 注意：如果要将生成的代码粘贴到新项目中（没有引用`springboot-init` 依赖的项目），那么要将`springboot-init` 项目中的 `com.suhuamo.init.common` 目录复制到新项目中，否则会报错【有两个类找不到】。
+![common目录.png](assert/img3.png)
 
 
-#### 安装教程
-
-1.  直接下拉使用即可
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+## 二、用于生成CRUD代码并且作为基础项目使用
+### 1. 下载代码
+```shell
+git clone https://gitee.com/suhuamo/springboot-init.git
+```
+### 2. 生成CRUD代码
+操作和第一种一样，只不过不需要修改依赖了，直接创建一个运行类配置自动生成代码的配置，然后运行即可。
+### 3. 修改`application.yml`配置
+- mysql配置：10、11、12； 配置数据库、账号、密码
+- mybatis配置：24~41；xml文件映射位置、表名前缀、逻辑删除字段、实体类位置
+- springdoc配置：44~61：配置swagger的相关信息，主要修改61行的包名位置
+- jwt配置： `com.suhuamo.init.config.JwtWebConfig` 中配置拦截规则和放行的接口
+- cors配置：`com.suhuamo.init.config.CorsConfig` 中允许跨域的ip、方法、请求头、是否携带cookie等。
+### 4. 配置完成，正常开发即可

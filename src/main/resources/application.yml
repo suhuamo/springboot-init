@@ -8,8 +8,8 @@ spring:
   #数据源配置
   datasource:
     username: root
-    password: 123456
-    url: jdbc:mysql://localhost:3306/online_ide?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&
+    password:
+    url: jdbc:mysql://localhost:3306/temp_ycc?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&
     driver‐class‐name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
