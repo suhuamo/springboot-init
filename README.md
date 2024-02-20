@@ -100,3 +100,7 @@ git clone https://gitee.com/suhuamo/springboot-init.git
 - jwt配置： `com.suhuamo.init.config.JwtWebConfig` 中配置拦截规则和放行的接口
 - cors配置：`com.suhuamo.init.config.CorsConfig` 中允许跨域的ip、方法、请求头、是否携带cookie等。
 ### 4. 配置完成，正常开发即可
+
+### 注意
+    由于配置了该插件`classifier`，那么打包之后，应该运行的jar包是 `springboot-init-1.0-exec.jar`,而不是 `springboot-init-1.0.jar`。因为配置了这个插件之后，自动生成的`springboot-init-1.0.jar`是不含任何依赖的，只有该项目的源代码，故可以被其他项目引用，而`springboot-init-1.0-exec.jar`是含有所有依赖的，可以直接运行。
+![注意1.png](assert/img4.png)
