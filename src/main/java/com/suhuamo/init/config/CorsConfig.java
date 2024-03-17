@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 跨域配置
  */
 @Configuration
-public class CrosConfig implements WebMvcConfigurer {
+public class CorsConfig implements WebMvcConfigurer {
 
     /**
      * 添加跨域请求映射--全局Cors配置

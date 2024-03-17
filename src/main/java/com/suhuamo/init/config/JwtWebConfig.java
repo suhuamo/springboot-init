@@ -11,8 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @slogan 也许散落在浩瀚宇宙的小行星们也知道
  * jwt的web鉴权配置
  */
-//@Configuration
-public class JwtWebConfig  implements WebMvcConfigurer {
+@Configuration
+public class JwtWebConfig implements WebMvcConfigurer {
 
     /**
      * 添加拦截器
