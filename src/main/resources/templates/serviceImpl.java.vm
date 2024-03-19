@@ -1,8 +1,5 @@
 package ${package.ServiceImpl};
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,29 +38,18 @@ public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, $
     @Override
     public void validUpdateData(${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
         // 1. 如id不能为空，可以使用注解校验
-        if(${table.entityPath}UpdateDTO.getId() == null) {
+        /*if(${table.entityPath}UpdateDTO.getId() == null) {
             throw new CustomException(CodeEnum.PARAM_ERROR);
-        }
-        // 2. 其他校验
+        }*/
     }
 
     @Override
     public void validQueryData(${entity}QueryDTO ${table.entityPath}QueryDTO) {
-        long pageSize = ${table.entityPath}QueryDTO.getPageSize();
-        // 1. 每次查询数量不可大于限定数量，可使用注解校验
+        // 1. 如每次查询数量不可大于限定数量，可使用注解校验
+        /*long pageSize = ${table.entityPath}QueryDTO.getPageSize();
         if(pageSize >= CommonConstant.PAGE_DATA_MAX_LIMIT) {
              ${table.entityPath}QueryDTO.setPageSize(CommonConstant.PAGE_DATA_MAX_LIMIT);
-        }
-        // 2. 其他校验
-    }
-
-    @Override
-    public Wrapper getQueryWrapper(${entity}QueryDTO ${table.entityPath}QueryDTO) {
-        // 1. 创建 Wrapper 对象
-        LambdaQueryWrapper<${entity}> ${table.entityPath}LambdaQueryWrapper = Wrappers.lambdaQuery(${entity}.class);
-        // 2. 进行条件拼接,如 name like xx, age = xxx
-        // 3. 返回数据
-        return ${table.entityPath}LambdaQueryWrapper;
+        }*/
     }
 
     @Override
@@ -71,19 +57,44 @@ public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, $
         // 1. 查询数据
         ${entity} ${table.entityPath} = ${table.entityPath}Mapper.selectById(id);
         // 2. 返回结果
-        if(${table.entityPath} == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return ${table.entityPath} != null;
     }
 
     @Override
-    public Page<${entity}VO> pageToVo(Page<${entity}> ${table.entityPath}Page) {
-        return (Page<${entity}VO>) ${table.entityPath}Page.convert(this::poToVo);
+    public ${entity} save(${entity}AddDTO personAddDTO) {
+        // 1. 转换为实体Pojo
+        ${entity} person = addDtoToPo(personAddDTO);
+        // 2. 入库
+        personMapper.insert(person);
+        // 3. 返回入库的数据
+        return person;
     }
 
     @Override
+    public Person update(PersonUpdateDTO personUpdateDTO) {
+        // 1. 转换为实体Pojo
+        Person person = updateDtoToPo(personUpdateDTO);
+        // 2. 入库
+        personMapper.updateById(person);
+        // 3. 返回入库的数据
+        return person;
+    }
+
+    @Override
+    public Page<Person> page(PersonQueryDTO personQueryDTO) {
+        // 1.创建分页对象
+        Page<Person> personPage = new Page<Person>(personQueryDTO.getPageNum(), personQueryDTO.getPageSize());
+        // 2.分页查询
+        personPage = personMapper.selectByPage(personPage, personQueryDTO);
+        // 3. 返回分页查询到的数据
+        return personPage;
+    }
+
+    /**
+     * 将addDto对象转换为po对象--标准化
+     * @param ${table.entityPath}AddDTO
+     * @return ${entity}
+     */
     public ${entity} addDtoToPo(${entity}AddDTO ${table.entityPath}AddDTO) {
         // 1. 创建实体
         ${entity} ${table.entityPath} = new ${entity}();
@@ -93,7 +104,11 @@ public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, $
         return ${table.entityPath};
     }
 
-    @Override
+    /**
+     * 将updateDto对象转换为po对象--标准化
+     * @param ${table.entityPath}UpdateDTO
+     * @return ${entity}
+     */
     public ${entity} updateDtoToPo(${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
         // 1. 创建实体
         ${entity} ${table.entityPath} = new ${entity}();
@@ -117,6 +132,11 @@ public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, $
     @Override
     public List<${entity}VO> poToVo(List<${entity}> ${table.entityPath}List) {
         return ${table.entityPath}List.stream().map(this::poToVo).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<${entity}VO> pageToVo(Page<${entity}> ${table.entityPath}Page) {
+        return (Page<${entity}VO>) ${table.entityPath}Page.convert(this::poToVo);
     }
 
 }

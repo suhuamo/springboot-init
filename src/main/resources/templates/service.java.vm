@@ -2,7 +2,6 @@ package ${package.Service};
 
 import ${superServiceClassPackage};
 import java.util.List;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${package.Entity}.dto.${table.entityPath}.*;
 import ${package.Entity}.${entity};
@@ -41,20 +40,6 @@ public interface ${table.serviceName} extends IService<${entity}>{
     void validQueryData(${entity}QueryDTO ${table.entityPath}QueryDTO);
 
     /**
-     * 根据查询数据的参数解析Wrapper
-     * @param ${table.entityPath}QueryDTO
-     * @return Wrapper
-     */
-    Wrapper getQueryWrapper(${entity}QueryDTO ${table.entityPath}QueryDTO);
-
-    /**
-     * 将分页的数据vo化
-     * @param ${table.entityPath}Page
-     * @return Page<${entity}VO>
-     */
-    Page<${entity}VO> pageToVo(Page<${entity}> ${table.entityPath}Page);
-
-    /**
      * 校验指定id的数据是否存在
      * @param id
      * @return Boolean
@@ -62,18 +47,25 @@ public interface ${table.serviceName} extends IService<${entity}>{
     Boolean idExists(Integer id);
 
     /**
-     * 将addDto对象转换为po对象--标准化
+     * 新增 ${table.entityPath}AddDTO
      * @param ${table.entityPath}AddDTO
      * @return ${entity}
      */
-    ${entity} addDtoToPo(${entity}AddDTO ${table.entityPath}AddDTO);
+    ${entity} save(${entity}AddDTO ${table.entityPath}AddDTO);
 
     /**
-     * 将updateDto对象转换为po对象--标准化
+     * 修改 ${table.entityPath}AddDTO
      * @param ${table.entityPath}UpdateDTO
      * @return ${entity}
      */
-    ${entity} updateDtoToPo(${entity}UpdateDTO ${table.entityPath}UpdateDTO);
+    ${entity} update(${entity}UpdateDTO ${table.entityPath}UpdateDTO);
+
+    /**
+     * 分页查询 ${table.entityPath}
+     * @param ${table.entityPath}QueryDTO
+     * @return ${entity}
+     */
+    Page<${entity}> page(${entity}QueryDTO ${table.entityPath}QueryDTO);
 
     /**
      * 将po对转换为vo对象--可视化
@@ -88,5 +80,12 @@ public interface ${table.serviceName} extends IService<${entity}>{
      * @return List<${entity}VO>
      */
     List<${entity}VO> poToVo(List<${entity}> ${table.entityPath}List);
+
+    /**
+     * 将分页的数据vo化
+     * @param ${table.entityPath}Page
+     * @return Page<${entity}VO>
+     */
+    Page<${entity}VO> pageToVo(Page<${entity}> ${table.entityPath}Page);
 
 }

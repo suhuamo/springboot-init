@@ -2,7 +2,6 @@ package ${package.Controller};
 
 import lombok.extern.slf4j.Slf4j;
 import java.util.List;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +34,9 @@ public class ${table.controllerName} {
     public ResponseResult<${entity}VO> add${entity}(@RequestBody ${entity}AddDTO ${table.entityPath}AddDTO) {
         // 1. 校验数据
         ${table.entityPath}Service.validAddData(${table.entityPath}AddDTO);
-        // 2. 转换类型
-        ${entity} ${table.entityPath} = ${table.entityPath}Service.addDtoToPo(${table.entityPath}AddDTO);
-        // 3. 插入数据
-        ${table.entityPath}Service.save(${table.entityPath});
-        // 4. 转换为vo返回给前端
+        // 2. 插入数据
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.save(${table.entityPath}AddDTO);
+        // 3. 转换为vo返回给前端
         return ResponseResult.ok(${table.entityPath}Service.poToVo(${table.entityPath}));
     }
 
@@ -68,11 +65,9 @@ public class ${table.controllerName} {
     public ResponseResult<${entity}VO> update${entity}ById(@RequestBody ${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
         // 1. 校验数据
         ${table.entityPath}Service.validUpdateData(${table.entityPath}UpdateDTO);
-        // 2. 转换类型
-        ${entity} ${table.entityPath} = ${table.entityPath}Service.updateDtoToPo(${table.entityPath}UpdateDTO);
-        // 3. 更新数据库
-        ${table.entityPath}Service.updateById(${table.entityPath});
-        // 4. 返回vo给前端
+        // 2. 更新数据库
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.update(${table.entityPath}UpdateDTO);
+        // 3. 返回vo给前端
         return ResponseResult.ok(${table.entityPath}Service.poToVo(${table.entityPath}));
     }
 
@@ -85,11 +80,9 @@ public class ${table.controllerName} {
     public ResponseResult<Page<${entity}VO>> get${entity}ByPage(${entity}QueryDTO ${table.entityPath}QueryDTO) {
         // 1. 校验数据
         ${table.entityPath}Service.validQueryData(${table.entityPath}QueryDTO);
-        // 2. 根据数据解析 Wrapper
-        Wrapper<${entity}> queryWrapper = ${table.entityPath}Service.getQueryWrapper(${table.entityPath}QueryDTO);
-        // 3. 进行查询
-        Page<${entity}> ${table.entityPath}Page = ${table.entityPath}Service.page(new Page<>(${table.entityPath}QueryDTO.getPageNum(), ${table.entityPath}QueryDTO.getPageSize()), queryWrapper);
-        // 4. 返回vo给前端
+        // 2. 进行查询
+        Page<${entity}> ${table.entityPath}Page = ${table.entityPath}Service.page(${table.entityPath}QueryDTO);
+        // 3. 返回vo给前端
         return ResponseResult.ok(${table.entityPath}Service.pageToVo(${table.entityPath}Page));
     }
 
