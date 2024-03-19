@@ -8,7 +8,7 @@ spring:
   #数据源配置
   datasource:
     username: root
-    password:
+    password: 123456
     url: jdbc:mysql://localhost:3306/temp_ycc?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8
     driver‐class‐name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
@@ -21,7 +21,7 @@ mybatis-plus:
     # 自动驼峰命名
     map-underscore-to-camel-case: true
   # .xml 文件的映射位置，不写会报错
-  mapper-locations: classpath:com/suhuamo/init/mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml
   # 全局策略配置
   global-config:
     db-config:
