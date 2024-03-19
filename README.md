@@ -92,7 +92,7 @@ public class Main {
 git clone https://gitee.com/suhuamo/springboot-init.git
 ```
 ### 2. 生成CRUD代码
-操作和第一种一样，只不过不需要修改依赖了，直接创建一个运行类配置自动生成代码的配置，然后运行即可。
+操作和第一种一样，只不过不需要修改依赖了，直接运行`src/test/java/com/suhuamo/init/ApplicationMainTest.java`文件生成代码即可。
 ### 3. 修改`application.yml`配置
 - mysql配置：10、11、12； 配置数据库、账号、密码
 - mybatis配置：24~41；xml文件映射位置、表名前缀、逻辑删除字段、实体类位置
