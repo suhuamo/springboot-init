@@ -229,7 +229,6 @@ public class GenerateUtil {
                 throw new RuntimeException(e);
             }
         });
-        thread.shutdown();
     }
 
 
@@ -327,7 +326,6 @@ public class GenerateUtil {
                 throw new RuntimeException(e);
             }
         });
-        thread.shutdown();
     }
 
     /**
@@ -431,7 +429,6 @@ public class GenerateUtil {
                 throw new RuntimeException(e);
             }
         });
-        thread.shutdown();
     }
 
     /**
@@ -517,6 +514,5 @@ public class GenerateUtil {
                 throw new RuntimeException(e);
             }
         });
-        thread.shutdown();
     }
 }

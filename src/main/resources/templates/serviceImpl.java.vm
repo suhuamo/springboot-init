@@ -61,33 +61,33 @@ public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, $
     }
 
     @Override
-    public ${entity} save(${entity}AddDTO personAddDTO) {
+    public ${entity} save(${entity}AddDTO ${table.entityPath}AddDTO) {
         // 1. 转换为实体Pojo
-        ${entity} person = addDtoToPo(personAddDTO);
+        ${entity} ${table.entityPath} = addDtoToPo(${table.entityPath}AddDTO);
         // 2. 入库
-        personMapper.insert(person);
+        ${table.entityPath}Mapper.insert(${table.entityPath});
         // 3. 返回入库的数据
-        return person;
+        return ${table.entityPath};
     }
 
     @Override
-    public Person update(PersonUpdateDTO personUpdateDTO) {
+    public ${entity} update(${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
         // 1. 转换为实体Pojo
-        Person person = updateDtoToPo(personUpdateDTO);
+        ${entity} ${table.entityPath} = updateDtoToPo(${table.entityPath}UpdateDTO);
         // 2. 入库
-        personMapper.updateById(person);
+        ${table.entityPath}Mapper.updateById(${table.entityPath});
         // 3. 返回入库的数据
-        return person;
+        return ${table.entityPath};
     }
 
     @Override
-    public Page<Person> page(PersonQueryDTO personQueryDTO) {
+    public Page<${entity}> page(${entity}QueryDTO ${table.entityPath}QueryDTO) {
         // 1.创建分页对象
-        Page<Person> personPage = new Page<Person>(personQueryDTO.getPageNum(), personQueryDTO.getPageSize());
+        Page<${entity}> ${table.entityPath}Page = new Page<${entity}>(${table.entityPath}QueryDTO.getPageNum(), ${table.entityPath}QueryDTO.getPageSize());
         // 2.分页查询
-        personPage = personMapper.selectByPage(personPage, personQueryDTO);
+        ${table.entityPath}Page = ${table.entityPath}Mapper.selectByPage(${table.entityPath}Page, ${table.entityPath}QueryDTO);
         // 3. 返回分页查询到的数据
-        return personPage;
+        return ${table.entityPath}Page;
     }
 
     /**
