@@ -22,7 +22,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") //映射服务器中哪些http接口运行跨域访问
-                .allowedOrigins("http://localhost:8080") // 配置哪些来源有权跨域，可以防止其他人的跨域攻击。
+                .allowedOrigins("http://localhost:8080") // 配置哪些来源有权跨域，可以防止其他人的跨域攻击。如果要配置全局，则使用 allowedOriginPatterns("*") ，如果要指定ip，则使用 allowedOrigins("ip地址:端口")
                 .allowedMethods("*") // 允许跨域的方法，可以单独配置
                 .allowedHeaders("*") // 允许跨域的请求头，
                 .allowCredentials(true) // 允许请求头中携带参数

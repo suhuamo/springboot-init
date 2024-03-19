@@ -65,6 +65,17 @@ public class FileUtil {
     }
 
     /**
+     * 判断文件是否存在，存在返回true
+     *
+     * @param path
+     * @return boolean
+     */
+    public static boolean fileExists(String path) {
+        File file = new File(path);
+        return file.exists();
+    }
+
+    /**
      * 将 content 内容以append的形式写入 path 文件中
      * 1.append为true则代表追加
      * 2.append为false则代表覆盖

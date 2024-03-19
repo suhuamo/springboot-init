@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 ## vm的语句必须顶格，否则会出现生成的代码格式混乱的问题，因为vm语句的空行/空格会被同样写入自动生成文件
 /**
 * <p>
-* $!{table.comment} 数据库实体类
+* $!{table.comment} 数据表实体类
 * </p>
 *
 * @author ${author}
