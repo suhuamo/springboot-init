@@ -322,7 +322,7 @@ public class GenerateUtil {
                     }
                 }
                 // 新增不需要逻辑删除标识
-                else if (line.startsWith("    private Byte delFlag;")) {
+                else if (line.startsWith("    private Boolean deleteFlag;")) {
                     // 移除上面的三行注释
                     for (int i = 0; i < 3; i++) {
                         updateContentList.remove(updateContentList.size() - 1);
@@ -425,7 +425,7 @@ public class GenerateUtil {
                     }
                 }
                 // 新增不需要逻辑删除标识
-                else if (line.startsWith("    private Byte delFlag;")) {
+                else if (line.startsWith("    private Boolean deleteFlag;")) {
                     // 移除上面的三行注释
                     for (int i = 0; i < 3; i++) {
                         addContentList.remove(addContentList.size() - 1);
@@ -510,7 +510,7 @@ public class GenerateUtil {
                     }
                 }
                 // 查询不需要逻辑删除标识
-                else if (line.startsWith("    private Byte delFlag;")) {
+                else if (line.startsWith("    private Boolean deleteFlag;")) {
                     // 移除上面的三行注释
                     for (int i = 0; i < 3; i++) {
                         queryContentList.remove(queryContentList.size() - 1);

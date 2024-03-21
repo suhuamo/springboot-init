@@ -24,6 +24,9 @@ public class JwtWebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtInterceptor()) // 添加自定义拦截器
                 .addPathPatterns("/**")// 设置映射规则,即允许哪些接口会被添加到拦截器中
-                .excludePathPatterns("/user/login", "/user/register"); //设置排除的规则，即哪些接口不会被加入到拦截器中
+                .excludePathPatterns("/users/login", "/users/add" // 用户登录接口
+                        , "/doc*/**","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**", // swagger接口
+                        "/api", "/api-docs", "/api-docs/**", "/doc.html/**" // swagger接口
+                        , "*.html", "/redirect/*"); //设置排除的规则，即哪些接口不会被加入到拦截器中
     }
 }
