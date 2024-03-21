@@ -43,11 +43,24 @@ public class GenerateProperties {
      */
     private String author = "suhuamo";
     /**
-     * 指定输出目录，默认为当前项目的java文件夹
+     * 指定java的输出目录，默认为当前项目的java文件夹
      * @version 1.0
      * @author suhuamo
      */
-    private String outputDir = System.getProperty("user.dir") + "\\src\\main\\java";
+    private String outputDirJava = System.getProperty("user.dir") + "\\src\\main\\java";
+    /**
+     * 指定resources的输出目录，默认为当前项目的resources文件夹
+     * @version 1.0
+     * @author suhuamo
+     */
+    private String outputDirResources = System.getProperty("user.dir") + "\\src\\main\\resources";
+
+    /**
+     * 模板的三种类型。0：最新版；1：实体类版；2：标准版
+     * @version 1.0
+     * @author suhuamo
+     */
+    private int templateType = 0;
     // endregion 全局配置参数
 
     // region 包路径参数
@@ -74,7 +87,7 @@ public class GenerateProperties {
      * @version 1.0
      * @author suhuamo
      */
-    private String mapperXml = "mapper.xml";
+    private String mapperXml = "mapper";
     /**
      * Service 包名
      * @version 1.0

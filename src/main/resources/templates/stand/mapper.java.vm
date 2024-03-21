@@ -26,11 +26,4 @@ public interface ${table.mapperName}  extends BaseMapper<${entity}> {
      * @return Page<Person>
      */
     Page<${entity}> selectByPage(Page<${entity}> ${table.entityPath}Page, @Param("${table.entityPath}") ${entity}QueryDTO ${table.entityPath}QueryDTO);
-
-    /**
-     * 根据主键id查询对象--忽略逻辑删除
-     * @param id 主键id
-     * @return ${entity}
-     */
-    ${entity} selectRealById(@Param("id") Integer id);
 }

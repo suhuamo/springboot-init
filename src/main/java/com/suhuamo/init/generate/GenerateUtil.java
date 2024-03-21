@@ -2,12 +2,14 @@ package com.suhuamo.init.generate;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
+import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.suhuamo.init.util.FileUtil;
 import com.suhuamo.init.util.ThreadPoolUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -24,6 +26,14 @@ public class GenerateUtil {
      * java文件的文件后缀
      */
     private final static String JAVA_FILE_SUFFIX = ".java";
+    public static final String YYYY_MM_DD = "yyyy-MM-dd";
+    private static List<String> templatePath = new ArrayList<>();
+
+    static {
+        templatePath.add("/templates"); // 最新版
+        templatePath.add("/templates/pojo"); // 只需要实体类版
+        templatePath.add("/templates/stand"); // 标准版
+    }
 
     /**
      * 自动生成代码
@@ -33,38 +43,42 @@ public class GenerateUtil {
      */
     public static void generatorCode(GenerateProperties generateProperties) throws IOException {
         // 生成mybatis-plus定义的文件
-        createFastAutoGenerator(generateProperties.getUrl(), generateProperties.getUsername(), generateProperties.getPassword(), generateProperties.getAuthor(), generateProperties.getOutputDir(), generateProperties.getParent(), generateProperties.getEntity(), generateProperties.getMapper(), generateProperties.getMapperXml(), generateProperties.getService(), generateProperties.getServiceImpl(), generateProperties.getController(), generateProperties.getTables(), generateProperties.getTablePrefix());
+        createFastAutoGenerator(generateProperties);
         // 创建其他自定义文件
-        createOtherFile(generateProperties.getOutputDir(), generateProperties.getParent(), generateProperties.getEntity());
+        createOtherFile(generateProperties.getOutputDirJava(), generateProperties.getParent(), generateProperties.getEntity());
     }
 
     /**
      * 代码生成器
      *
-     * @param url
-     * @param username
-     * @param password
-     * @param author
-     * @param outputDir
-     * @param parent
-     * @param entity
-     * @param mapper
-     * @param mapperXml
-     * @param service
-     * @param serviceImpl
-     * @param controller
-     * @param tables
-     * @param tablePrefix
+     * @param generateProperties 基础参数
      * @return void
      */
-    private static void createFastAutoGenerator(String url, String username, String password, String author, String outputDir, String parent, String entity, String mapper, String mapperXml, String service, String serviceImpl, String controller, List<String> tables, List<String> tablePrefix) {
+    private static void createFastAutoGenerator(GenerateProperties generateProperties) {
+        // 获取基础信息
+        String url = generateProperties.getUrl();
+        String username = generateProperties.getUsername();
+        String password = generateProperties.getPassword();
+        String author = generateProperties.getAuthor();
+        String outputDirJava = generateProperties.getOutputDirJava();
+        String outputDirResources = generateProperties.getOutputDirResources();
+        int templateType = generateProperties.getTemplateType();
+        String parent = generateProperties.getParent();
+        String entity = generateProperties.getEntity();
+        String mapper = generateProperties.getMapper();
+        String mapperXml = generateProperties.getMapperXml();
+        String service = generateProperties.getService();
+        String serviceImpl = generateProperties.getServiceImpl();
+        String controller = generateProperties.getController();
+        List<String> tables = generateProperties.getTables();
+        List<String> tablePrefix = generateProperties.getTablePrefix();
         //  开始生成
         FastAutoGenerator.create(url, username, password)
                 //全局配置
                 .globalConfig(builder -> {
                     builder.author(author)//设置作者名
-                            .outputDir(outputDir)//设置文件输出路径
-                            .commentDate("yyyy-MM-dd")//注释日期
+                            .outputDir(outputDirJava)//设置文件输出路径
+                            .commentDate(YYYY_MM_DD)//注释日期
                             .disableOpenDir();//运行完成不打开生成目录
                 })
                 //包配置
@@ -72,10 +86,11 @@ public class GenerateUtil {
                     builder.parent(parent)
                             .entity(entity)
                             .mapper(mapper)
-                            .xml(mapperXml)
+                            //.xml(mapperXml) // 使用 pathInfo给xml文件重新指定路径了
                             .service(service)
                             .serviceImpl(serviceImpl)
-                            .controller(controller);
+                            .controller(controller)
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, outputDirResources + "\\" + mapperXml));
                 })
                 //策略配置
                 .strategyConfig(builder -> {
@@ -101,7 +116,14 @@ public class GenerateUtil {
                             .formatFileName("%sController")//格式化文件名称
                             .enableRestStyle();
                 })
+                // 当未配置模板路径时，先找 templates文件下有没有对应的，没有就用 mybatis 自带的
                 .templateConfig(builder -> {
+                    builder.controller(templatePath.get(templateType) + "/controller.java.vm");
+                    builder.entity(templatePath.get(templateType) + "/entity.java.vm");
+                    builder.mapper(templatePath.get(templateType) + "/mapper.java.vm");
+                    builder.xml(templatePath.get(templateType) + "/mapper.xml.vm");
+                    builder.service(templatePath.get(templateType) + "/service.java.vm");
+                    builder.serviceImpl(templatePath.get(templateType) + "/serviceImpl.java.vm");
                 })
                 .execute();
     }

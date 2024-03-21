@@ -1,0 +1,117 @@
+package ${package.Controller};
+
+import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.suhuamo.init.enums.CodeEnum;
+import com.suhuamo.init.common.ResponseResult;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+import ${package.Entity}.dto.${table.entityPath}.*;
+import ${package.Entity}.vo.${entity}VO;
+
+/**
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Slf4j
+@RestController
+@RequestMapping("/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end#if(1==1)s#end")
+public class ${table.controllerName} {
+
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
+
+    /**
+       * 新增 ${table.entityPath}
+       * @param ${table.entityPath}AddDTO 新增数据实体类
+       * @return ResponseResult<${entity}>
+       */
+    @PostMapping
+    public ResponseResult<${entity}VO> add${entity}(@RequestBody ${entity}AddDTO ${table.entityPath}AddDTO) {
+        // 1. 校验数据
+        ${table.entityPath}Service.validAddData(${table.entityPath}AddDTO);
+        // 2. 插入数据
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.save(${table.entityPath}AddDTO);
+        // 3. 转换为vo返回给前端
+        return ResponseResult.ok(${table.entityPath}Service.poToVo(${table.entityPath}));
+    }
+
+    /**
+     * 根据 id 删除 ${table.entityPath}
+     * @param id 主键
+     * @return ResponseResult<Boolean>
+     */
+    @DeleteMapping("/{id}")
+    public ResponseResult<Boolean> delete${entity}ById(@PathVariable("id") Integer id) {
+        // 1. 校验 id 是否存在
+        if(!${table.entityPath}Service.idExists(id)) {
+            return ResponseResult.error(CodeEnum.NOT_FOUND_ERROR);
+        }
+        // 2. 删除数据
+        ${table.entityPath}Service.removeById(id);
+        return ResponseResult.ok(true);
+    }
+
+    /**
+     * 根据 id 修改 ${table.entityPath}
+     * @param ${table.entityPath}UpdateDTO 修改数据实体类
+     * @return ResponseResult<${entity}>
+     */
+    @PutMapping("/{id}")
+    public ResponseResult<${entity}VO> update${entity}ById(@RequestBody ${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
+        // 1. 校验数据
+        ${table.entityPath}Service.validUpdateData(${table.entityPath}UpdateDTO);
+        // 2. 更新数据库
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.update(${table.entityPath}UpdateDTO);
+        // 3. 返回vo给前端
+        return ResponseResult.ok(${table.entityPath}Service.poToVo(${table.entityPath}));
+    }
+
+    /**
+     * 分页查询 ${table.entityPath}, 由传入参数限制条件
+     * @param ${table.entityPath}QueryDTO 分页查询条件
+     * @return ResponseResult<List<${entity}VO>>
+     */
+    @GetMapping
+    public ResponseResult<Page<${entity}VO>> get${entity}ByPage(${entity}QueryDTO ${table.entityPath}QueryDTO) {
+        // 1. 校验数据
+        ${table.entityPath}Service.validQueryData(${table.entityPath}QueryDTO);
+        // 2. 进行查询
+        Page<${entity}> ${table.entityPath}Page = ${table.entityPath}Service.page(${table.entityPath}QueryDTO);
+        // 3. 返回vo给前端
+        return ResponseResult.ok(${table.entityPath}Service.pageToVo(${table.entityPath}Page));
+    }
+
+    /**
+     * 查询所有 ${table.entityPath}
+     * @return ResponseResult<List<${entity}VO>>
+     */
+    @GetMapping("/list")
+    public ResponseResult<Page<${entity}VO>> get${entity}List() {
+        // 1. 查询数据
+        List<${entity}> ${table.entityPath}List = ${table.entityPath}Service.list();
+        // 4. 返回vo给前端
+        return ResponseResult.ok(${table.entityPath}Service.poToVo(${table.entityPath}List));
+    }
+
+    /**
+     * 根据 id 查询 ${table.entityPath}
+     * @param id 主键
+     * @return ResponseResult<${entity}>
+     */
+    @GetMapping("/{id}")
+    public ResponseResult<${entity}VO> get${entity}ById(@PathVariable("id") Integer id) {
+        // 1. 校验数据
+        if(!${table.entityPath}Service.idExists(id)) {
+            return ResponseResult.error(CodeEnum.NOT_FOUND_ERROR);
+        }
+        // 2. 查询数据
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.getById(id);
+        // 3. 返回vo给前端
+        return ResponseResult.ok(${table.entityPath}Service.poToVo(${table.entityPath}));
+    }
+}
