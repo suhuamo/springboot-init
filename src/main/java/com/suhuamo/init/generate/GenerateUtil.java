@@ -323,11 +323,6 @@ public class GenerateUtil {
                         updateContentList.remove(updateContentList.size() - 1);
                     }
                 }
-                // 注解需要修改
-                else if (line.startsWith("    @JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\",")) {
-                    updateContentList.add("    @DateTimeFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")");
-                    updateContentList.add("\n");
-                }
                 // 其他都一样，无需处理，直接添加
                 else {
                     updateContentList.add(line);
@@ -431,11 +426,6 @@ public class GenerateUtil {
                         addContentList.remove(addContentList.size() - 1);
                     }
                 }
-                // 注解需要修改
-                else if (line.startsWith("    @JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\",")) {
-                    addContentList.add("    @DateTimeFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")");
-                    addContentList.add("\n");
-                }
                 // 其他都一样，无需处理，直接添加
                 else {
                     addContentList.add(line);
@@ -521,7 +511,7 @@ public class GenerateUtil {
                         queryContentList.remove(queryContentList.size() - 1);
                     }
                 }
-                // 注解需要修改
+                // 注解需要修改--@JsonFormat是给Json数据用的，@DateTimeFormat才是给query数据用的
                 else if (line.startsWith("    @JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\",")) {
                     queryContentList.add("    @DateTimeFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")");
                     queryContentList.add("\n");
