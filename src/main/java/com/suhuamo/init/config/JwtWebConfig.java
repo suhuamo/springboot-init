@@ -41,6 +41,7 @@ public class JwtWebConfig implements WebMvcConfigurer {
         excludePathPatternList.add("/index.html"); //普通页面--后端首页
         excludePathPatternList.add("/upload/index.html"); //普通页面--测试上传文件页面
         excludePathPatternList.add("/redirect/*"); // 路径跳转接口
+        excludePathPatternList.add("/files/**"); // 文件相关接口
         excludePathPatternList.addAll(Arrays.asList(userUrl));
         excludePathPatternList.addAll(Arrays.asList(swaggerUrl));
         registry.addInterceptor(new JwtInterceptor()) // 添加自定义拦截器
