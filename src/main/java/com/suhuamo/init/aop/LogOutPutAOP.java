@@ -1,5 +1,6 @@
 package com.suhuamo.init.aop;
 
+import com.suhuamo.init.util.IPUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -49,7 +50,7 @@ public class LogOutPutAOP {
         String reqParam = "[" + StringUtils.join(args, ", ") + "]";
         // 输出请求日志
         log.info("\nrequest start，id: {}, path: {}, ip: {}, params: {}", requestId, url,
-                httpServletRequest.getRemoteHost(), reqParam);
+                IPUtil.getIpAddress(httpServletRequest), reqParam);
         // 执行原方法
         Object result = point.proceed();
         // 输出响应日志
