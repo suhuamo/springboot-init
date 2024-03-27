@@ -32,6 +32,18 @@ public class DateUtil {
      */
     public static final SimpleDateFormat dayEndTimeFormat = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
 
+    /**
+     * 用来创建名称的时间格式：yyyyMMddHHmmssSSS
+     * @version 1.0
+     * @author chenjing
+     * @with {@link }
+     */
+    public static final SimpleDateFormat createNameFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+
+    public static String getNameByDate() {
+        return createNameFormat.format(new Date());
+    }
+
     public static String getDayBeginTime(Date date) {
         return dayBeginTimeFormat.format(date);
     }

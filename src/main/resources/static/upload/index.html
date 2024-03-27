@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>文件上传</h2>
+<form action="/files/upload" method="post" enctype="multipart/form-data">
+    <input type="text" name="dir" value="avatar" hidden>
+    <input type="file" name="file" accept="image/png,image/jpg">
+    <input type="submit" value="点我上传">
+</form>
+</body>
+</html>

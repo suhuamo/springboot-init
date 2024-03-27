@@ -12,6 +12,13 @@ spring:
     url: jdbc:mysql://localhost:3306/temp_ycc?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8
     driver‐class‐name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  servlet:
+    # 配置文件上传
+    multipart:
+      # 设置单个文件的上传大小
+      max-file-size: 32MB
+      # 设置单次上传文件的总大小
+      max-request-size: 512MB
 
 # mybatis-plus配置
 mybatis-plus:
@@ -31,7 +38,7 @@ mybatis-plus:
       logic-delete-field: deleteFlag
       # 逻辑已删除的默认值：1
       logic-delete-value: 1
-      # 逻辑未删除的默认值：1
+      # 逻辑未删除的默认值：0
       logic-not-delete-value: 0
       # 主键自动生成
       id-type: AUTO
@@ -45,10 +52,10 @@ knife4j:
   enable: true
   openapi:
     title: Knife4j官方文档
-    description: "`我是测试`,**你知道吗**"
-    email: xiaoymin@foxmail.com
-    concat: 八一菜刀
-    url: https://docs.xiaominfo.com
+    description: "`本项目的接口文档"
+    email: suhuamo@foxmail.com
+    concat: 苏花末
+    url: https://suhuamo.com
     version: v4.0
     license: Apache 2.0
     license-url: https://stackoverflow.com/
@@ -64,3 +71,12 @@ logging:
   file:
     # 配置日志文件生成地址
     name: logs\spring.log
+
+# 项目参数配置
+project:
+  # 文件相关参数
+  file:
+    # 项目文件根目录
+    parentPath: D:\test\bicycle
+    # 图片文件夹名称
+    imgDirectoryName: img
