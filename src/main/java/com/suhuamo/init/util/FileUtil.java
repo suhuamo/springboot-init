@@ -67,12 +67,27 @@ public class FileUtil {
     /**
      * 判断文件是否存在，存在返回true
      *
-     * @param path
+     * @param path 文件路径
      * @return boolean
      */
     public static boolean fileExists(String path) {
         File file = new File(path);
         return file.exists();
+    }
+
+    /**
+     *  判断文件夹是否存在，如果不存在，则创建文件夹
+     * @param path
+     * @return boolean 返回true代表创建成功，返回false代表创建失败【即不需要创建】
+     * @version 1.0
+     * @author suhuamo
+     */
+    public static boolean mkdirIfNotExists(String path) {
+        if(!FileUtil.fileExists(path)) {
+            File file = new File(path);
+            return file.mkdirs();
+        }
+        return false;
     }
 
     /**

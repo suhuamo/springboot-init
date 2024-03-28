@@ -30,17 +30,9 @@ public class InitTask implements EnvironmentAware {
 
     @Override
     public void setEnvironment(Environment environment) {
-        String imgAbsolutePath = fileProperties.getImgAbsolutePath();
         // 1. 判断图片文件夹是否存在，如果不存在，则创建
-        if(!FileUtil.fileExists(imgAbsolutePath)) {
-            File file = new File(imgAbsolutePath);
-            file.mkdirs();
-        }
+        FileUtil.mkdirIfNotExists(fileProperties.getImgAbsolutePath());
         // 2. 判断缓冲区文件夹是否存在，如果不存在，则创建
-        String location = multipartProperties.getLocation();
-        if(!FileUtil.fileExists(location)) {
-            File file = new File(location);
-            file.mkdirs();
-        }
+        FileUtil.mkdirIfNotExists(multipartProperties.getLocation());
     }
 }
