@@ -19,6 +19,8 @@ spring:
       max-file-size: 32MB
       # 设置单次上传文件的总大小
       max-request-size: 512MB
+      # 前端上传图片数据的缓存区
+      location: D:\test\temp
 
 # mybatis-plus配置
 mybatis-plus:

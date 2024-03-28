@@ -25,8 +25,7 @@ import java.util.stream.Collectors;
  * @author chenjing
  * @slogan 今天的早餐是：早苗的面包、秋子的果酱和观铃的果汁~
  * @date 2024-03-27
- * @description
- * 文件服务实现层
+ * @description 文件服务实现层
  */
 @Service
 @Slf4j
@@ -49,17 +48,12 @@ public class FileServiceImpl implements FileService {
         // 1.生成文件名：当前时间.格式后缀
         String fileName = DateUtil.getNameByDate() + getSuffix(multipartFile.getOriginalFilename());
         // 2.进行下载文件
-        ExecutorService thread = ThreadPoolUtil.getThread();
-        thread.execute(() -> {
-            try {
-                System.out.println("fileProperties.getImgAbsolutePath() = " + fileProperties.getImgAbsolutePath());
-                System.out.println("fileName = " + fileName);
-                multipartFile.transferTo(new File(fileProperties.getImgAbsolutePath(), fileName));
-                log.info("文件{}下载成功", fileName);
-            } catch (IOException e) {
-                throw new CustomException(CodeEnum.PARAM_ERROR, e.getMessage());
-            }
-        });
+        try {
+            multipartFile.transferTo(new File(fileProperties.getImgAbsolutePath(), fileName));
+            log.info("文件{}下载成功", fileName);
+        } catch (IOException e) {
+            throw new CustomException(CodeEnum.PARAM_ERROR, e.getMessage());
+        }
         return getFileUrl(fileName);
     }
 
@@ -75,6 +69,7 @@ public class FileServiceImpl implements FileService {
 
     /**
      * 返回文件的网络链接
+     *
      * @param fileName 文件名称
      * @return
      */
@@ -86,7 +81,7 @@ public class FileServiceImpl implements FileService {
             ip = "127.0.0.1";
         }
         Integer port = serverProperties.getPort();
-        if(port == 0) {
+        if (port == 0) {
             port = 8080;
         }
         return "http://" + ip + ":" + port + "/files/" + fileName;
@@ -94,6 +89,7 @@ public class FileServiceImpl implements FileService {
 
     /**
      * 获取图片文件的文件后缀
+     *
      * @param picName
      * @return
      */
