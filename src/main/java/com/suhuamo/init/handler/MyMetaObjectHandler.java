@@ -23,8 +23,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         // 创建时间
         this.setFieldValByName(MysqlConstant.CREATE_TIME_FILED, LocalDateTime.now(), metaObject);
-        // 更新时间
-        this.setFieldValByName(MysqlConstant.UPDATE_TIME_FILED, LocalDateTime.now(), metaObject);
     }
 
     /**
