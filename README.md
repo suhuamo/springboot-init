@@ -99,6 +99,7 @@ git clone https://gitee.com/suhuamo/springboot-init.git
 - springdoc配置：44~61：配置swagger的相关信息，主要修改61行的包名位置
 - jwt配置： `com.suhuamo.init.config.JwtWebConfig` 中配置拦截规则和放行的接口
 - cors配置：`com.suhuamo.init.config.CorsConfig` 中允许跨域的ip、方法、请求头、是否携带cookie等。
+- 上传文件相关配置：`com.suhuamo.init.config.WebConfig`中配置虚拟路径映射地址和 `project.file` 中配置本地文件的下载地址
 ### 4. 配置完成，正常开发即可
 
 ### 注意
