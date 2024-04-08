@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suhuamo.init.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.suhuamo.init.pojo.User">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="password" property="password" />
+        <result column="avatar" property="avatar" />
+        <result column="type" property="type" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="delete_flag" property="deleteFlag" />
+    </resultMap>
+    <select id="selectByPage" resultType="com.suhuamo.init.pojo.User">
+        select *
+        from t_user
+        <where>
+            <if test="user.name != null and user.name != ''">
+                and name = #{user.name}
+            </if>
+        and delete_flag = 0
+        </where>
+    </select>
+    <select id="selectRealById" resultType="com.suhuamo.init.pojo.User">
+        select *
+        from t_user
+        where id = #{id}
+    </select>
+
+</mapper>

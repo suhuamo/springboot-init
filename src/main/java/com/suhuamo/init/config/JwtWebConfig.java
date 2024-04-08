@@ -15,7 +15,7 @@ import java.util.List;
  * @slogan 也许散落在浩瀚宇宙的小行星们也知道
  * jwt的web鉴权配置
  */
-@Configuration
+//@Configuration
 public class JwtWebConfig implements WebMvcConfigurer {
 
     /**

@@ -19,7 +19,7 @@ public class ApplicationMainTest {
     @Test
     public void generateCode() throws IOException {
         GenerateProperties generateProperties = new GenerateProperties();
-        generateProperties.setUrl("jdbc:mysql://localhost:3306/temp_ycc?userUnicode=true&characterEncoding=utf8&serverTimezone=UTC&nullCatalogMeansCurrent=true");
+        generateProperties.setUrl("jdbc:mysql://localhost:3306/temp_ycc?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8");
         generateProperties.setUsername("root");
         generateProperties.setPassword("123456");
         generateProperties.setAuthor("suhuamo");
