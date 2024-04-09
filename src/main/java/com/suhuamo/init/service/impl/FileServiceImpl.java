@@ -2,9 +2,11 @@ package com.suhuamo.init.service.impl;
 
 import com.suhuamo.init.enums.CodeEnum;
 import com.suhuamo.init.exception.CustomException;
+import com.suhuamo.init.pojo.FileDTO;
 import com.suhuamo.init.propertie.FileProperties;
 import com.suhuamo.init.service.FileService;
 import com.suhuamo.init.util.DateUtil;
+import com.suhuamo.init.util.FileUtil;
 import com.suhuamo.init.util.ThreadPoolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +69,73 @@ public class FileServiceImpl implements FileService {
         return Arrays.stream(files).map(file -> this.getFileUrl(file.getName())).collect(Collectors.toList());
     }
 
+    @Override
+    public String upload(FileDTO fileDTO) {
+        // 1.生成文件名：当前时间.格式后缀
+        String fileName = getFileName(fileDTO) + getSuffix(fileDTO.getMultipartFile().getOriginalFilename());
+        // 2.进行下载文件
+        try {
+            File file = new File(fileProperties.getImgAbsolutePath(), fileName);
+            // 3. 防止该文件名称对应的文件已存在造成文件覆盖，当文件存在时，给则当前文件名称（1）、（2）....
+            file = renameFile(file);
+            // 4. 生成文件
+            fileDTO.getMultipartFile().transferTo(file);
+            log.info("文件{}下载成功", fileName);
+        } catch (IOException e) {
+            throw new CustomException(CodeEnum.PARAM_ERROR, e.getMessage());
+        }
+        return getFileUrl(fileName);
+    }
+
+    /**
+     *
+     * @param file
+     * @return File
+     * @version
+     * @author yuanchuncheng
+     */
+    private File renameFile(File file) {
+        int idx = 0; // 标记当前是第几个重复的文件
+        String removeSuffix = removeSuffix(file.getName()); // 获取文件名称，不带后缀
+        String suffix = getSuffix(file.getName()); // 获取文件后缀
+        // 判断该文件是否已经存在
+        while(FileUtil.fileExists(file.getAbsolutePath())) {
+            // 如果存在，则名称重命名: 名称(idx).后缀
+            file = new File(file.getParent(), removeSuffix + "(" + (++idx) + ")" + suffix);
+        }
+        // 返回重命名后的文件
+        return file;
+    }
+
+    public static void main(String[] args) {
+        File file = new File("D:\\test\\test\\a.txt");
+        int idx = 0;
+        System.out.println("file.getAbsolutePath() = " + file.getAbsolutePath());
+        System.out.println("file.getName() = " + file.getName());
+        System.out.println("file.getParent() = " + file.getParent());
+        String name = file.getName();
+        String removeSuffix = removeSuffix(name);
+        String suffix = getSuffix(name);
+        while(FileUtil.fileExists(file.getAbsolutePath())) {
+            file = new File(file.getParent(), removeSuffix + "(" + (++idx) + ")" + suffix);
+        }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     *  获取文件上传对象的文件名称
+     * @param fileDTO 文件上传对象
+     * @return String
+     * @author suhuamo
+     */
+    private String getFileName(FileDTO fileDTO) {
+        return fileDTO.getName() != null ? removeSuffix(fileDTO.getName()) : removeSuffix(fileDTO.getMultipartFile().getOriginalFilename());
+    }
+
     /**
      * 返回文件的网络链接
      *
@@ -93,7 +162,17 @@ public class FileServiceImpl implements FileService {
      * @param picName
      * @return
      */
-    private String getSuffix(String picName) {
+    private static String getSuffix(String picName) {
         return picName.substring(picName.lastIndexOf("."));
+    }
+
+    /**
+     *  去掉文件名称的文件后缀
+     * @param fileName 文件名称
+     * @return String
+     * @author suhuamo
+     */
+    private static String removeSuffix(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf("."));
     }
 }

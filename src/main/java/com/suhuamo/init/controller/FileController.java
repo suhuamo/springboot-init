@@ -2,7 +2,9 @@ package com.suhuamo.init.controller;
 
 import com.suhuamo.init.common.ResponseResult;
 import com.suhuamo.init.enums.CodeEnum;
+import com.suhuamo.init.pojo.FileDTO;
 import com.suhuamo.init.service.FileService;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +30,31 @@ public class FileController {
     FileService fileService;
 
     /**
-     * 上传单个文件并获取文件的链接地址
+     * 上传单个文件并获取文件的链接地址--文件自动重命名为当前时间戳
      * @param multipartFile
-     * @param request
      * @return
      */
     @PostMapping("/upload")
-    public ResponseResult<String> upload(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) {
+    public ResponseResult<String> upload(@RequestParam("file") MultipartFile multipartFile) {
         // 1. 校验上传的文件
         fileService.validUploadFile(multipartFile);
         // 2. 上传图片
         String fileUrl = fileService.upload(multipartFile);
+        // 3. 返回图片的url
+        return ResponseResult.ok(fileUrl);
+    }
+
+    /**
+     * 上传单个文件并获取文件的链接地址--使用name作为名称或者文件自带的名称，如果冲突了，则名称（1）、（2）....
+     * @param fileDTO 上传的文件
+     * @return
+     */
+    @PostMapping("/upload/name")
+    public ResponseResult<String> uploadByName(FileDTO fileDTO) {
+        // 1. 校验上传的文件
+        fileService.validUploadFile(fileDTO.getMultipartFile());
+        // 2. 上传图片
+        String fileUrl = fileService.upload(fileDTO);
         // 3. 返回图片的url
         return ResponseResult.ok(fileUrl);
     }
