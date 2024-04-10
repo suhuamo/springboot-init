@@ -2,12 +2,11 @@ package com.suhuamo.init.service.impl;
 
 import com.suhuamo.init.enums.CodeEnum;
 import com.suhuamo.init.exception.CustomException;
-import com.suhuamo.init.pojo.FileDTO;
+import com.suhuamo.init.pojo.dto.file.FileUploadDTO;
 import com.suhuamo.init.propertie.FileProperties;
 import com.suhuamo.init.service.FileService;
 import com.suhuamo.init.util.DateUtil;
 import com.suhuamo.init.util.FileUtil;
-import com.suhuamo.init.util.ThreadPoolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -20,7 +19,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 /**
@@ -70,16 +68,16 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String upload(FileDTO fileDTO) {
-        // 1.生成文件名：当前时间.格式后缀
-        String fileName = getFileName(fileDTO) + getSuffix(fileDTO.getMultipartFile().getOriginalFilename());
+    public String upload(FileUploadDTO fileUploadDTO) {
+        // 1.生成文件名：文件名称.格式后缀
+        String fileName = getFileName(fileUploadDTO) + getSuffix(fileUploadDTO.getMultipartFile().getOriginalFilename());
         // 2.进行下载文件
         try {
             File file = new File(fileProperties.getImgAbsolutePath(), fileName);
             // 3. 防止该文件名称对应的文件已存在造成文件覆盖，当文件存在时，给则当前文件名称（1）、（2）....
             file = renameFile(file);
             // 4. 生成文件
-            fileDTO.getMultipartFile().transferTo(file);
+            fileUploadDTO.getMultipartFile().transferTo(file);
             log.info("文件{}下载成功", fileName);
         } catch (IOException e) {
             throw new CustomException(CodeEnum.PARAM_ERROR, e.getMessage());
@@ -128,12 +126,12 @@ public class FileServiceImpl implements FileService {
 
     /**
      *  获取文件上传对象的文件名称
-     * @param fileDTO 文件上传对象
+     * @param fileUploadDTO 文件上传对象
      * @return String
      * @author suhuamo
      */
-    private String getFileName(FileDTO fileDTO) {
-        return fileDTO.getName() != null ? removeSuffix(fileDTO.getName()) : removeSuffix(fileDTO.getMultipartFile().getOriginalFilename());
+    private String getFileName(FileUploadDTO fileUploadDTO) {
+        return fileUploadDTO.getName() != null ? removeSuffix(fileUploadDTO.getName()) : removeSuffix(fileUploadDTO.getMultipartFile().getOriginalFilename());
     }
 
     /**

@@ -90,6 +90,18 @@ public class FileUtil {
         return false;
     }
 
+    public static boolean createIfNotExists(String path) {
+        if(!FileUtil.fileExists(path)) {
+            File file = new File(path);
+            try {
+                return file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
+    }
+
     /**
      * 将 content 内容以append的形式写入 path 文件中
      * 1.append为true则代表追加

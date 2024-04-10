@@ -27,6 +27,8 @@ public class ApplicationMain {
          5. 使用注解过滤当前用户权限数据
          6. ThreadLocalUtil添加getUser方法
          7. Integer使用 NotNull， String使用NotEmpty 注解
+         8. vo,dto
+         9. processUtil工具类
          */
         SpringApplication.run(ApplicationMain.class, args);
     }

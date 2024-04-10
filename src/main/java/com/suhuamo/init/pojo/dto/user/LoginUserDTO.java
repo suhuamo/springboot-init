@@ -1,4 +1,4 @@
-package com.suhuamo.init.pojo.dto;
+package com.suhuamo.init.pojo.dto.user;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

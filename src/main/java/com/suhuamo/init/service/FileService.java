@@ -1,6 +1,6 @@
 package com.suhuamo.init.service;
 
-import com.suhuamo.init.pojo.FileDTO;
+import com.suhuamo.init.pojo.dto.file.FileUploadDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -33,8 +33,8 @@ public interface FileService {
 
     /**
      * 保存图片到本地并返回连接
-     * @param fileDTO
+     * @param fileUploadDTO
      * @return
      */
-    String upload(FileDTO fileDTO);
+    String upload(FileUploadDTO fileUploadDTO);
 }

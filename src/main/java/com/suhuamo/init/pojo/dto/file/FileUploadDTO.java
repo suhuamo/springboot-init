@@ -1,4 +1,4 @@
-package com.suhuamo.init.pojo;
+package com.suhuamo.init.pojo.dto.file;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -8,10 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
  * @author yuanchuncheng
  * @date 2024-04-09
  * @description
+ * 通过名称上传文件DTO
  */
 @Data
 @Accessors(chain = true)
-public class FileDTO {
+public class FileUploadDTO {
     /**
      * 文件
      * @version
