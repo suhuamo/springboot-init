@@ -486,6 +486,7 @@ public class GenerateUtil {
                     queryContentList.add(vo_line);
                     // 添加 PageProperties 的包
                     queryContentList.add("import com.suhuamo.init.common.PageProperties;\n");
+                    queryContentList.add("import org.springframework.format.annotation.DateTimeFormat;\n");
                 }
                 // 类名需要修改
                 else if (line.startsWith("public class " + name + " implements Serializable")) {
