@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.suhuamo.init.enums.CodeEnum;
+import com.suhuamo.init.enums.RoleTypeEnum;
 import com.suhuamo.init.exception.CustomException;
 import com.suhuamo.init.mapper.UserMapper;
 import com.suhuamo.init.pojo.User;
@@ -153,7 +154,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = new User();
         user.setName(userAddDTO.getName());
         user.setPassword(userAddDTO.getPassword());
-        user.setType("user");
+        user.setType(RoleTypeEnum.USER.getType());
         return user;
     }
 

@@ -46,10 +46,21 @@ public class User implements Serializable {
     @TableField(value = "avatar")
     private String avatar;
     /**
-     * 类型，admin-管理员；user-普通用户
+     * 邮箱
+     */
+    @TableField(value = "email")
+    private String email;
+    /**
+     * 电话号码
+     */
+    @TableField(value = "telephone")
+    private String telephone;
+    /**
+     * 类型，0-管理员；1-普通用户
+     * @with {@link com.suhuamo.init.enums.RoleTypeEnum}
      */
     @TableField(value = "type")
-    private String type;
+    private Integer type;
     /**
      * 创建时间
      */

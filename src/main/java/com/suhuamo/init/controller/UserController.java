@@ -45,7 +45,7 @@ public class UserController {
         User login = userService.login(loginUserDTO);
         // 2. 判断是否输入正确
         if(login == null) {
-            return ResponseResult.error(500, "账号或密码输入错误");
+            return ResponseResult.error("账号或密码输入错误");
         } else {
             // 3. 验证通过，则创建token返回
             String token = JwtUtil.createToken(String.valueOf(login.getId()));
@@ -66,7 +66,7 @@ public class UserController {
         User user = userService.getNow();
         // 2. 判断是否已经登录
         if(user == null) {
-            return ResponseResult.error(500, "未登录");
+            return ResponseResult.error(CodeEnum.UNAUTHORIZED_NONE.getCode(), "未登录");
         } else {
             // 3. 返回数据
             return ResponseResult.ok(userService.poToVo(user));

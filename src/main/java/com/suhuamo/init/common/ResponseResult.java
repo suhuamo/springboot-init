@@ -128,6 +128,16 @@ public class ResponseResult<T> implements Serializable {
     }
 
     /**
+     * 返回请求失败的构造函数，默认{code:{codeEnum.code},message:{codeEnum.desc},data:null}
+     *
+     * @param msg
+     * @return BaseResponse
+     */
+    public static ResponseResult error(String msg) {
+        return new ResponseResult(CodeEnum.PARAM_ERROR, msg);
+    }
+
+    /**
      * 返回请求失败的构造函数，默认{code:{code},message:{message},data:null}
      * 
      * @param
