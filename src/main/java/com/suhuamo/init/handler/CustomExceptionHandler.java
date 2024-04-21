@@ -29,7 +29,7 @@ public class CustomExceptionHandler {
         if(e.getClass() == CustomException.class) {
             //类型转型
             CustomException ce = (CustomException) e;
-            return ResponseResult.error(ce.getCodeEnum().getCode(), ce.getMessage());
+            return ResponseResult.error(ce.getCode(), ce.getMessage());
         // 非自定义类型
         }else{
             return ResponseResult.error(CodeEnum.SERVER_ERROR);

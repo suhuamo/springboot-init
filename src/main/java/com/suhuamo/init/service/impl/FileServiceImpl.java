@@ -39,7 +39,7 @@ public class FileServiceImpl implements FileService {
     public void validUploadFile(MultipartFile multipartFile) {
         // 1：判断上传文件是否为空
         if (multipartFile.isEmpty()) {
-            throw new CustomException(CodeEnum.PARAM_ERROR, "不可上传空文件");
+            throw CustomException.QueryException("不可上传空文件");
         }
     }
 
@@ -52,7 +52,7 @@ public class FileServiceImpl implements FileService {
             multipartFile.transferTo(new File(fileProperties.getImgAbsolutePath(), fileName));
             log.info("文件{}下载成功", fileName);
         } catch (IOException e) {
-            throw new CustomException(CodeEnum.PARAM_ERROR, e.getMessage());
+            throw CustomException.ServerException(e.getMessage());
         }
         return getFileUrl(fileName);
     }
