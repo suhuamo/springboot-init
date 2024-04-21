@@ -21,14 +21,9 @@ public class ApplicationMain {
         // TODO: 2024/3/20 如下 [by:yuanchuncheng]
         /*
          1. 添加分页查询xml语句
-
          3. 重新设计CodeEnum和全局异常
-
          5. 使用注解过滤当前用户权限数据
          6. ThreadLocalUtil添加getUser方法
-
-
-         9. processUtil工具类
          */
         SpringApplication.run(ApplicationMain.class, args);
     }
