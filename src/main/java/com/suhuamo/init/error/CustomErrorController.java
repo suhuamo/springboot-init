@@ -4,6 +4,7 @@ import com.suhuamo.init.common.ResponseResult;
 import com.suhuamo.init.constant.HttpConstant;
 import com.suhuamo.init.enums.CodeEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.connector.Request;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
@@ -69,6 +70,8 @@ public class CustomErrorController extends AbstractErrorController {
     @RequestMapping
     @ResponseBody
     public ResponseResult error(HttpServletRequest request) {
+        StringBuffer requestURL = request.getRequestURL();
+        System.out.println(requestURL);
         HttpStatus status = this.getStatus(request);
         if (status == HttpStatus.NO_CONTENT) {
             return ResponseResult.error(CodeEnum.NO_CONTENT.getCode(), CodeEnum.NO_CONTENT.getDesc());
@@ -79,7 +82,7 @@ public class CustomErrorController extends AbstractErrorController {
         if(body.get(HttpConstant.TRACE_TEXT) != null) {
             log.error("ajax请求发生错误，错误原因为:" + body.get(HttpConstant.TRACE_TEXT).toString());
         } else {
-            log.error("ajax请求发生错误，错误原因为:...没有内容");
+            log.error("ajax请求发生错误，错误原因为:...没有请求目标内容");
         }
         return ResponseResult.error(Integer.parseInt(code), message);
     }

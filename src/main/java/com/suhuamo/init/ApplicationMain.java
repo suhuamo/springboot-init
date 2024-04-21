@@ -2,6 +2,7 @@ package com.suhuamo.init;
 
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -15,7 +16,8 @@ import java.io.IOException;
 //        DataSourceTransactionManagerAutoConfiguration.class,
 //        HibernateJpaAutoConfiguration.class ,
 //        DruidDataSourceAutoConfigure.class})
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.example.test","com.suhuamo.init"})
+@MapperScan({"com.example.test.mapper", "com.suhuamo.init.mapper"})
 public class ApplicationMain {
     public static void main(String[] args) throws IOException {
         // TODO: 2024/3/20 如下 [by:yuanchuncheng]

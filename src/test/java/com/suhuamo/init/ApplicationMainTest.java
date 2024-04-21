@@ -19,14 +19,14 @@ public class ApplicationMainTest {
     @Test
     public void generateCode() throws IOException {
         GenerateProperties generateProperties = new GenerateProperties();
-        generateProperties.setUrl("jdbc:mysql://localhost:3306/temp_ycc?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8");
+        generateProperties.setUrl("jdbc:mysql://localhost:3306/init?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8");
         generateProperties.setUsername("root");
         generateProperties.setPassword("123456");
         generateProperties.setAuthor("suhuamo");
         generateProperties.setParent("com.example.test");
         generateProperties.setTemplateType(0);
-        generateProperties.setTables(Arrays.asList("tbl_person"));
-        generateProperties.setTablePrefix(Arrays.asList("tbl_"));
+        generateProperties.setTables(Arrays.asList("t_user"));
+        generateProperties.setTablePrefix(Arrays.asList("t_"));
         // 生成代码
         GenerateUtil.generatorCode(generateProperties);
     }
