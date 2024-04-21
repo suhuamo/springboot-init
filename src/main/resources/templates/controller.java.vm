@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.suhuamo.init.enums.CodeEnum;
 import com.suhuamo.init.common.ResponseResult;
+import javax.validation.Valid;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 import ${package.Entity}.dto.${table.entityPath}.*;
@@ -31,7 +32,7 @@ public class ${table.controllerName} {
        * @return ResponseResult<${entity}>
        */
     @PostMapping
-    public ResponseResult<${entity}VO> add${entity}(@RequestBody ${entity}AddDTO ${table.entityPath}AddDTO) {
+    public ResponseResult<${entity}VO> add${entity}(@Valid @RequestBody ${entity}AddDTO ${table.entityPath}AddDTO) {
         // 1. 校验数据
         ${table.entityPath}Service.validAddData(${table.entityPath}AddDTO);
         // 2. 插入数据
@@ -62,7 +63,7 @@ public class ${table.controllerName} {
      * @return ResponseResult<${entity}>
      */
     @PutMapping("/{id}")
-    public ResponseResult<${entity}VO> update${entity}ById(@RequestBody ${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
+    public ResponseResult<${entity}VO> update${entity}ById(@Valid @RequestBody ${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
         // 1. 校验数据
         ${table.entityPath}Service.validUpdateData(${table.entityPath}UpdateDTO);
         // 2. 更新数据库

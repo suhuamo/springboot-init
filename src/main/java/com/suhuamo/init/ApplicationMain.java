@@ -23,11 +23,11 @@ public class ApplicationMain {
          1. 添加分页查询xml语句
 
          3. 重新设计CodeEnum和全局异常
-         4. DTO加上@NotNUll和接口加上@Valid
+
          5. 使用注解过滤当前用户权限数据
          6. ThreadLocalUtil添加getUser方法
-         7. Integer使用 NotNull， String使用NotEmpty 注解
-         8. vo,dto
+
+
          9. processUtil工具类
          */
         SpringApplication.run(ApplicationMain.class, args);
