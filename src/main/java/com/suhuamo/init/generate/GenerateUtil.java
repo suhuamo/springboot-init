@@ -4,14 +4,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.suhuamo.init.util.FileUtil;
-import com.suhuamo.init.util.ThreadPoolUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author yuanchuncheng
@@ -156,7 +154,7 @@ public class GenerateUtil {
                 // 读取内容
                 String content = FileUtil.readFile(pojoFile);
                 // 创建vo
-                creatVO(name, pojoFile, content, entity, "vo", "VO");
+                creatVO(name, pojoFile, content, entity);
                 // 首字母小写
                 String firstLetter = name.substring(0, 1).toLowerCase();
                 String restLetters = name.substring(1);
@@ -165,9 +163,9 @@ public class GenerateUtil {
                 File dtoDileDirectory = new File(fileDirectory + "/dto/" + result);
                 dtoDileDirectory.mkdirs();
                 // 创建dto文件
-                creatAddDTO(name, pojoFile, content, entity, "dto/" + result, "AddDTO");
-                creatUpdateDTO(name, pojoFile, content, entity, "dto/" + result, "UpdateDTO");
-                creatQueryDTO(name, pojoFile, content, entity, "dto/" + result, "QueryDTO");
+                creatAddDTO(name, pojoFile, content, entity, "dto/" + result);
+                creatUpdateDTO(name, pojoFile, content, entity, "dto/" + result);
+                creatQueryDTO(name, pojoFile, content, entity, "dto/" + result);
             }
         }
     }
@@ -179,13 +177,11 @@ public class GenerateUtil {
      * @param pojoFile
      * @param content
      * @param entity
-     * @param directory
-     * @param suffix
      * @return void
      */
-    private static void creatVO(String name, String pojoFile, String content, String entity, String directory, String suffix) {
+    private static void creatVO(String name, String pojoFile, String content, String entity) {
         // 创建vo类文件
-        String voFile = pojoFile.replace(name + JAVA_FILE_SUFFIX, directory + "/" + name + suffix + JAVA_FILE_SUFFIX);
+        String voFile = pojoFile.replace(name + JAVA_FILE_SUFFIX, "vo" + "/" + name + "VO" + JAVA_FILE_SUFFIX);
         // 如果文件已经存在，则不再修改
         if (FileUtil.fileExists(voFile)) {
             return;
@@ -197,29 +193,26 @@ public class GenerateUtil {
         // 进行内容处理，即删除不需要的和修改
         for (String line : split) {
             // 需要忽略的行
-            if (line.contains("@Id") || line.contains("@TableId") || line.contains("@Column") || line.contains("@TableField") || line.contains("@Entity") || line.contains("@Table")) {
+            if (isCommonLineCanIgnore(line)) {
                 continue;
             } else {
                 // 包路径需要修改
                 if (line.startsWith("package")) {
-                    if (directory.contains("/")) {
-                        directory = directory.replace("/", ".");
-                    }
-                    String vo_line = line.replace(entity, entity + "." + directory);
+                    String vo_line = line.replace(entity, entity + "." + "vo");
                     voContentList.add(vo_line);
                     voContentList.add("import org.springframework.format.annotation.DateTimeFormat;");
                     voContentList.add("\n");
                 }
                 // 类名需要修改
                 else if (line.startsWith("public class " + name + " implements Serializable")) {
-                    String vo_line = line.replace("public class " + name + " implements Serializable", "public class " + name + suffix + " implements Serializable");
+                    String vo_line = line.replace("public class " + name + " implements Serializable", "public class " + name + "VO" + " implements Serializable");
                     voContentList.add(vo_line);
                 }
                 // 注释需要修改
                 else if (line.contains("数据表实体类")) {
                     String vo_line = "";
                     // 如果是dto
-                    if (suffix.equals("DTO")) {
+                    if ("VO".equals("DTO")) {
                         vo_line = line.replace("数据表实体类", "前端->后端数据传输类");
                     } else {
                         vo_line = line.replace("数据表实体类", "后端->前端数据显示类");
@@ -233,19 +226,7 @@ public class GenerateUtil {
             }
         }
         // 进行线程处理
-        ExecutorService thread = ThreadPoolUtil.getThread();
-        thread.execute(() -> {
-            // 创建vo文件
-            StringBuilder voContent = new StringBuilder();
-            for (String s : voContentList) {
-                voContent.append(s);
-            }
-            try {
-                FileUtil.writeFile(voFile, String.valueOf(voContent));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        FileUtil.writeFileByThread(voFile, voContentList);
     }
 
 
@@ -257,12 +238,11 @@ public class GenerateUtil {
      * @param content
      * @param entity
      * @param directory
-     * @param suffix
      * @return void
      */
-    private static void creatUpdateDTO(String name, String pojoFile, String content, String entity, String directory, String suffix) {
+    private static void creatUpdateDTO(String name, String pojoFile, String content, String entity, String directory) {
         // 创建update类文件
-        String updateDTOFile = pojoFile.replace(name + JAVA_FILE_SUFFIX, directory + "/" + name + suffix + JAVA_FILE_SUFFIX);
+        String updateDTOFile = pojoFile.replace(name + JAVA_FILE_SUFFIX, directory + "/" + name + "UpdateDTO" + JAVA_FILE_SUFFIX);
         // 如果文件已经存在，则不再修改
         if (FileUtil.fileExists(updateDTOFile)) {
             log.info(updateDTOFile + "文件已存在，要生成请先删除修改");
@@ -275,7 +255,7 @@ public class GenerateUtil {
         // 进行内容处理，即删除不需要的和修改
         for (String line : split) {
             // 需要忽略的行
-            if (line.contains("@Id") || line.contains("@TableId") || line.contains("@Column") || line.contains("@TableField") || line.contains("@Entity") || line.contains("@Table")) {
+            if (isCommonLineCanIgnore(line)) {
                 continue;
             } else {
                 // 包路径需要修改
@@ -288,14 +268,14 @@ public class GenerateUtil {
                 }
                 // 类名需要修改
                 else if (line.startsWith("public class " + name + " implements Serializable")) {
-                    String vo_line = line.replace("public class " + name + " implements Serializable", "public class " + name + suffix + " implements Serializable");
+                    String vo_line = line.replace("public class " + name + " implements Serializable", "public class " + name + "UpdateDTO" + " implements Serializable");
                     updateContentList.add(vo_line);
                 }
                 // 注释需要修改
                 else if (line.contains("数据表实体类")) {
                     String vo_line = "";
                     // 如果是dto
-                    if (suffix.equals("DTO")) {
+                    if ("UpdateDTO".equals("DTO")) {
                         vo_line = line.replace("数据表实体类", "前端->后端数据传输类");
                     } else {
                         vo_line = line.replace("数据表实体类", "后端->前端数据显示类");
@@ -330,19 +310,7 @@ public class GenerateUtil {
             }
         }
         // 进行线程处理
-        ExecutorService thread = ThreadPoolUtil.getThread();
-        thread.execute(() -> {
-            // 创建vo文件
-            StringBuilder voContent = new StringBuilder();
-            for (String s : updateContentList) {
-                voContent.append(s);
-            }
-            try {
-                FileUtil.writeFile(updateDTOFile, String.valueOf(voContent));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        FileUtil.writeFileByThread(updateDTOFile, updateContentList);
     }
 
     /**
@@ -353,12 +321,11 @@ public class GenerateUtil {
      * @param content
      * @param entity
      * @param directory
-     * @param suffix
      * @return void
      */
-    private static void creatAddDTO(String name, String pojoFile, String content, String entity, String directory, String suffix) {
+    private static void creatAddDTO(String name, String pojoFile, String content, String entity, String directory) {
         // 创建add类文件
-        String addDTOFile = pojoFile.replace(name + JAVA_FILE_SUFFIX, directory + "/" + name + suffix + JAVA_FILE_SUFFIX);
+        String addDTOFile = pojoFile.replace(name + JAVA_FILE_SUFFIX, directory + "/" + name + "AddDTO" + JAVA_FILE_SUFFIX);
         // 如果文件已经存在，则不再修改
         if (FileUtil.fileExists(addDTOFile)) {
             log.info(addDTOFile + "文件已存在，要生成请先删除修改");
@@ -371,7 +338,7 @@ public class GenerateUtil {
         // 进行内容处理，即删除不需要的和修改
         for (String line : split) {
             // 需要忽略的行
-            if (line.contains("@Id") || line.contains("@TableId") || line.contains("@Column") || line.contains("@TableField") || line.contains("@Entity") || line.contains("@Table")) {
+            if (isCommonLineCanIgnore(line)) {
                 continue;
             } else {
                 // 包路径需要修改
@@ -384,14 +351,14 @@ public class GenerateUtil {
                 }
                 // 类名需要修改
                 else if (line.startsWith("public class " + name + " implements Serializable")) {
-                    String vo_line = line.replace("public class " + name + " implements Serializable", "public class " + name + suffix + " implements Serializable");
+                    String vo_line = line.replace("public class " + name + " implements Serializable", "public class " + name + "AddDTO" + " implements Serializable");
                     addContentList.add(vo_line);
                 }
                 // 注释需要修改
                 else if (line.contains("数据表实体类")) {
                     String vo_line = "";
                     // 如果是dto
-                    if (suffix.equals("DTO")) {
+                    if ("AddDTO".equals("DTO")) {
                         vo_line = line.replace("数据表实体类", "前端->后端数据传输类");
                     } else {
                         vo_line = line.replace("数据表实体类", "后端->前端数据显示类");
@@ -433,19 +400,7 @@ public class GenerateUtil {
             }
         }
         // 进行线程处理
-        ExecutorService thread = ThreadPoolUtil.getThread();
-        thread.execute(() -> {
-            // 创建vo文件
-            StringBuilder voContent = new StringBuilder();
-            for (String s : addContentList) {
-                voContent.append(s);
-            }
-            try {
-                FileUtil.writeFile(addDTOFile, String.valueOf(voContent));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        FileUtil.writeFileByThread(addDTOFile, addContentList);
     }
 
     /**
@@ -456,12 +411,11 @@ public class GenerateUtil {
      * @param content
      * @param entity
      * @param directory
-     * @param suffix
      * @return void
      */
-    private static void creatQueryDTO(String name, String pojoFile, String content, String entity, String directory, String suffix) {
+    private static void creatQueryDTO(String name, String pojoFile, String content, String entity, String directory) {
         // 创建query类文件
-        String queryFile = pojoFile.replace(name + JAVA_FILE_SUFFIX, directory + "/" + name + suffix + JAVA_FILE_SUFFIX);
+        String queryFile = pojoFile.replace(name + JAVA_FILE_SUFFIX, directory + "/" + name + "QueryDTO" + JAVA_FILE_SUFFIX);
         // 如果文件已经存在，则不再修改
         if (FileUtil.fileExists(queryFile)) {
             log.info(queryFile + "文件已存在，要生成请先删除修改");
@@ -474,7 +428,7 @@ public class GenerateUtil {
         // 进行内容处理，即删除不需要的和修改
         for (String line : split) {
             // 需要忽略的行
-            if (line.contains("@Id") || line.contains("@TableId") || line.contains("@Column") || line.contains("@TableField") || line.contains("@Entity") || line.contains("@Table")) {
+            if (isCommonLineCanIgnore(line)) {
                 continue;
             } else {
                 // 包路径需要修改
@@ -490,7 +444,7 @@ public class GenerateUtil {
                 }
                 // 类名需要修改
                 else if (line.startsWith("public class " + name + " implements Serializable")) {
-                    String vo_line = line.replace("public class " + name + " implements Serializable", "public class " + name + suffix + " extends PageProperties implements Serializable");
+                    String vo_line = line.replace("public class " + name + " implements Serializable", "public class " + name + "QueryDTO" + " extends PageProperties implements Serializable");
                     queryContentList.add(vo_line);
                 }
                 // 注释需要修改
@@ -524,18 +478,19 @@ public class GenerateUtil {
             }
         }
         // 进行线程处理
-        ExecutorService thread = ThreadPoolUtil.getThread();
-        thread.execute(() -> {
-            // 创建vo文件
-            StringBuilder voContent = new StringBuilder();
-            for (String s : queryContentList) {
-                voContent.append(s);
-            }
-            try {
-                FileUtil.writeFile(queryFile, String.valueOf(voContent));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        FileUtil.writeFileByThread(queryFile, queryContentList);
     }
+
+    /**
+     * 可以被忽略的行
+     * @param line
+     * @return boolean
+     * @version
+     * @author suhuamo
+     */
+    private static boolean isCommonLineCanIgnore(String line) {
+        return line.contains("@Id") || line.contains("@TableId") || line.contains("@Column") || line.contains("@TableField") || line.contains("@Entity") || line.contains("@Table") || line.contains("import com.baomidou.mybatisplus.annotation");
+    }
+
+
 }

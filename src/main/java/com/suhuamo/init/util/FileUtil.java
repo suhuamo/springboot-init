@@ -1,6 +1,8 @@
 package com.suhuamo.init.util;
 
 import java.io.*;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author suhuamo
@@ -62,6 +64,29 @@ public class FileUtil {
      */
     public static void writeFile(String path, String content) throws IOException {
         writeFile(path, content, false);
+    }
+
+    /**
+     * 将 content 内容以覆盖的形式写入 path 文件中,但使用线程
+     *
+     * @param path
+     * @param contentList
+     * @return void
+     */
+    public static void writeFileByThread(String path, List<String> contentList) {
+        ExecutorService thread = ThreadPoolUtil.getThread();
+        thread.execute(() -> {
+            // 创建vo文件
+            StringBuilder voContent = new StringBuilder();
+            for (String s : contentList) {
+                voContent.append(s);
+            }
+            try {
+                FileUtil.writeFile(path, String.valueOf(voContent));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     /**
