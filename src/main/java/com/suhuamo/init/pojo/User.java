@@ -56,6 +56,12 @@ public class User implements Serializable {
     @TableField(value = "telephone")
     private String telephone;
     /**
+     * 类型，0-男；1-女
+     * @with {@link com.suhuamo.init.enums.SexEnum}
+     */
+    @TableField(value = "sex")
+    private Integer sex;
+    /**
      * 类型，0-管理员；1-普通用户
      * @with {@link com.suhuamo.init.enums.RoleTypeEnum}
      */

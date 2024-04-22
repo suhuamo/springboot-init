@@ -10,6 +10,7 @@
         <result column="avatar" property="avatar" />
         <result column="email" property="email" />
         <result column="telephone" property="telephone" />
+        <result column="sex" property="sex" />
         <result column="type" property="type" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
@@ -20,7 +21,16 @@
         from t_user
         <where>
             <if test="user.name != null and user.name != ''">
-                and name = #{user.name}
+                and name = concat('%', #{user.name}, '%')
+            </if>
+            <if test="user.sex != null">
+                and sex = #{user.sex}
+            </if>
+            <if test="user.telephone != null and user.telephone != ''">
+                and telephone = concat('%', #{user.telephone}, '%')
+            </if>
+            <if test="user.email != null and user.email != ''">
+                and email = concat('%', #{user.email}, '%')
             </if>
         and delete_flag = 0
         </where>
