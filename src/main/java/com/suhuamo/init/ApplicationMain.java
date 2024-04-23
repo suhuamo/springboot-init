@@ -24,7 +24,7 @@ public class ApplicationMain {
         /*
          1. 添加分页查询xml语句
          5. 使用注解过滤当前用户权限数据
-         6. ThreadLocalUtil添加getUser方法
+         6. ThreadLocalUtil添加getUser方法,且改名
          */
         SpringApplication.run(ApplicationMain.class, args);
     }
