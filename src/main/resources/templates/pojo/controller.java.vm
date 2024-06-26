@@ -91,10 +91,10 @@ public class ${table.controllerName} {
      * @return ResponseResult<List<${entity}VO>>
      */
     @GetMapping("/list")
-    public ResponseResult<Page<${entity}VO>> get${entity}List() {
+    public ResponseResult<List<${entity}VO>> get${entity}List() {
         // 1. 查询数据
         List<${entity}> ${table.entityPath}List = ${table.entityPath}Service.list();
-        // 4. 返回vo给前端
+        // 2. 返回vo给前端
         return ResponseResult.ok(${table.entityPath}Service.poToVo(${table.entityPath}List));
     }
 
