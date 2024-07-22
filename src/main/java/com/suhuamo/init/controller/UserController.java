@@ -36,7 +36,7 @@ public class UserController {
      * 登录
      * @param loginUserDTO
      * @return ResponseResult<String>
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     @PostMapping("/login")

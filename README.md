@@ -51,7 +51,7 @@ import com.suhuamo.init.generate.GenerateProperties;
 import com.suhuamo.init.generate.GenerateUtil;
 
 /**
- * @author yuanchuncheng
+ * @author suhuamo
  * @slogan 巨人给你鞠躬，是为了让阳光也照射到你。
  * @date 2023-12-27
  * @description

@@ -14,14 +14,14 @@ import lombok.experimental.Accessors;
 public class ProcessResultDTO {
     /**
      * 状态码，0为异常，非0为正常
-     * @version
+     * @version 1.0
      * @author suhuamo
      * @with {@link }
      */
     int exitCode;
     /**
      * 命令输出结果
-     * @version
+     * @version 1.0
      * @author suhuamo
      * @with {@link }
      */

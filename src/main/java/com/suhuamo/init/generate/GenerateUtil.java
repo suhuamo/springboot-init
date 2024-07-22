@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author yuanchuncheng
+ * @author suhuamo
  * @slogan 耐心等，太阳总会升起来的。
  * @date 2023-12-31
  * @description 自动生成器工具类
@@ -521,7 +521,7 @@ public class GenerateUtil {
      * 可以被忽略的行
      * @param line
      * @return boolean
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     private static boolean isCommonLineCanIgnore(String line) {

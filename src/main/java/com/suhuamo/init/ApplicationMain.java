@@ -20,7 +20,7 @@ import java.io.IOException;
 @MapperScan({"com.example.test.mapper", "com.suhuamo.init.mapper"})
 public class ApplicationMain {
     public static void main(String[] args) throws IOException {
-        // TODO: 2024/3/20 如下 [by:yuanchuncheng]
+        // TODO: 2024/3/20 如下 [by:suhuamo]
         /*
          1. 添加分页查询xml语句
          5. 使用注解过滤当前用户权限数据

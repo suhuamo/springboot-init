@@ -33,7 +33,7 @@ public class CustomExceptionHandler {
      * @param response
      * @param e
      * @return ResponseResult
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     @ExceptionHandler(value = Exception.class)
@@ -61,7 +61,7 @@ public class CustomExceptionHandler {
      * @param request
      * @param e
      * @return ResponseResult<String>
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     @ResponseBody

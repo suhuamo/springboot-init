@@ -1,7 +1,7 @@
 package com.suhuamo.init.util;
 
 /**
- * @author yuanchuncheng
+ * @author suhuamo
  * @date 2024-03-19
  * @description 距离相关工具类
  */

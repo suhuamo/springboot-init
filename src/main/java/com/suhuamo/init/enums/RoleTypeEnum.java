@@ -1,7 +1,7 @@
 package com.suhuamo.init.enums;
 
 /**
- * @author yuanchuncheng
+ * @author suhuamo
  * @date 2024-04-08
  * @description
  * 角色类型枚举类

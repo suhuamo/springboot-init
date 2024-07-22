@@ -89,8 +89,8 @@ public class FileServiceImpl implements FileService {
      *
      * @param file
      * @return File
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     private File renameFile(File file) {
         int idx = 0; // 标记当前是第几个重复的文件

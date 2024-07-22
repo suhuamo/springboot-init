@@ -20,7 +20,7 @@ public class CmdUtil {
      * @param directory 工作目录
      * @param commands 执行的命令
      * @return ProcessResultDTO
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     public static ProcessResultDTO run(String directory, String ...commands) {
@@ -75,7 +75,7 @@ public class CmdUtil {
      * @param input 输入内容
      * @param commands 执行的命令
      * @return ProcessResultDTO
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     public static ProcessResultDTO runByInput(String directory,String input, String ...commands) {
@@ -132,7 +132,7 @@ public class CmdUtil {
      * 判断程序是否正常运行，异常返回true
      * @param processResultDTO
      * @return boolean
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     public static boolean isError(ProcessResultDTO processResultDTO) {

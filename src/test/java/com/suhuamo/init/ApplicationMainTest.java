@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author yuanchuncheng
+ * @author suhuamo
  * @date 2024-03-18
  * @description 生成代码
  */

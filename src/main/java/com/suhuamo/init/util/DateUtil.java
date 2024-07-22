@@ -62,8 +62,8 @@ public class DateUtil {
     /**
      * 根据当前时间获取名称 yyyyMMddHHmmssSSS
      * @return String
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     public static String getNameByDate() {
         return createNameFormat.format(new Date());
@@ -73,8 +73,8 @@ public class DateUtil {
      * 获取这一天的开始时间，格式为 yyyy-MM-dd 00:00:00
      * @param date
      * @return String
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     public static String getDayBeginTime(String date) {
         Date parse = null;
@@ -90,8 +90,8 @@ public class DateUtil {
      * 获取这一天的结束时间，格式为 yyyy-MM-dd 23:59:59
      * @param date
      * @return String
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     public static String getDayEndTime(String date) {
         Date parse = null;
@@ -108,8 +108,8 @@ public class DateUtil {
      * 获取这一天的开始时间，格式为 yyyy-MM-dd 00:00:00
      * @param date
      * @return String
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     public static String getDayBeginTime(Date date) {
         return dayBeginTimeFormat.format(date);
@@ -119,8 +119,8 @@ public class DateUtil {
      * 获取这一天的结束时间，格式为 yyyy-MM-dd 23:59:59
      * @param date
      * @return String
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     public static String getDayEndTime(Date date) {
         return dayEndTimeFormat.format(date);
@@ -131,8 +131,8 @@ public class DateUtil {
      * @param startDateTime
      * @param endDateTime
      * @return long
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     public static long calculateHoursBetween(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         Duration duration = Duration.between(startDateTime, endDateTime);
@@ -147,8 +147,8 @@ public class DateUtil {
      * 获取当天24小时每一小时的时间，和第二天0点的时间 格式为：yyyy-MM-dd HH:mm:ss
      * @param
      * @return List<String>
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     public static List<String> get24HoursList() {
         List<String> dayHoursList = new ArrayList<>();
@@ -172,8 +172,8 @@ public class DateUtil {
      * 获取这周每天的日期，格式为：yyyy-MM-dd
      * @param
      * @return List<String>
-     * @version
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
      */
     public static List<String> getThisWeekDataListString() {
         List<String> thisWeekDataListString = new ArrayList<>();

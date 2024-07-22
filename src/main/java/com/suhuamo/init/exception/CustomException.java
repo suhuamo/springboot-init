@@ -46,7 +46,7 @@ public class CustomException extends RuntimeException  {
      * 系统级别异常
      * @param message
      * @return CustomException
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     public static CustomException ServerException(String message) {
@@ -57,7 +57,7 @@ public class CustomException extends RuntimeException  {
      * 前端接口请求基本异常
      * @param message
      * @return CustomException
-     * @version
+     * @version 1.0
      * @author suhuamo
      */
     public static CustomException QueryException(String message) {

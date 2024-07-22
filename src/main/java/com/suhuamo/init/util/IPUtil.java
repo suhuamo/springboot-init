@@ -15,8 +15,8 @@ public class IPUtil {
      * 通过请求获取客户端的ip地址
      * @param request
      * @return {@link String}
-     * @version dev
-     * @author yuanchuncheng
+     * @version 1.0
+     * @author suhuamo
     */
     public static String getIpAddress(HttpServletRequest request) {
         String ip = null;
