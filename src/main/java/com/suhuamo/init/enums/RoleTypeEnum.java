@@ -8,23 +8,23 @@ package com.suhuamo.init.enums;
  */
 public enum RoleTypeEnum {
     // admin-管理员；user-普通用户
-    ADMIN(1, "admin"),
-    USER(2, "user");
+    ADMIN((byte) 1, "admin"),
+    USER((byte) 2, "user");
     /**
      * 类型
      */
-    private final Integer type;
+    private final Byte type;
     /**
      * 描述
      */
     private final String desc;
 
-    RoleTypeEnum(Integer type, String desc) {
+    RoleTypeEnum(Byte type, String desc) {
         this.type = type;
         this.desc = desc;
     }
 
-    public Integer getType() {
+    public Byte getType() {
         return type;
     }
 

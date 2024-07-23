@@ -417,7 +417,6 @@ public class GenerateUtil {
                 else if(line.startsWith("    private String")) {
                     String msgLine = addContentList.get(addContentList.size() - 2);
                     String msg = msgLine.replace(" ", "").replace("*", "").replace("\r", "");
-                    System.out.println(msg + "123");
                     addContentList.add("    @NotEmpty(message = \""+ msg + "不能为空\")\n");
                     addContentList.add(line);
                 }
@@ -425,7 +424,6 @@ public class GenerateUtil {
                 else if(line.startsWith("    private Integer")) {
                     String msgLine = addContentList.get(addContentList.size() - 2);
                     String msg = msgLine.replace(" ", "").replace("*", "").replace("\r", "");
-                    System.out.println(msg + "123");
                     addContentList.add("    @NotNull(message = \""+ msg + "不能为空\")\n");
                     addContentList.add(line);
                 }

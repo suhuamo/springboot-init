@@ -60,13 +60,13 @@ public class User implements Serializable {
      * @with {@link com.suhuamo.init.enums.SexEnum}
      */
     @TableField(value = "sex")
-    private Integer sex;
+    private Byte sex;
     /**
      * 类型，0-管理员；1-普通用户
      * @with {@link com.suhuamo.init.enums.RoleTypeEnum}
      */
     @TableField(value = "type")
-    private Integer type;
+    private Byte type;
     /**
      * 创建时间
      */
@@ -83,7 +83,7 @@ public class User implements Serializable {
      * 逻辑删除标识（0：未删除；1：已删除）
      */
     @TableField(value = "delete_flag")
-    private Boolean deleteFlag;
+    private Byte deleteFlag;
 
 
 }

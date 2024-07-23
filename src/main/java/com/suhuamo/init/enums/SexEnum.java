@@ -10,18 +10,18 @@ import lombok.Getter;
  */
 @Getter
 public enum SexEnum {
-    MAN(0, "男"),
-    WOMAN(1, "女");
+    MAN((byte) 0, "男"),
+    WOMAN((byte) 1, "女");
     /**
      * 类型
      */
-    private final Integer type;
+    private final Byte type;
     /**
      * 描述
      */
     private final String desc;
 
-    SexEnum(Integer type, String desc) {
+    SexEnum(Byte type, String desc) {
         this.type = type;
         this.desc = desc;
     }
