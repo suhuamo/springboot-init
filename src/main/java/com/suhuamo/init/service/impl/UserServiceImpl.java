@@ -54,7 +54,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new CustomException(CodeEnum.PARAM_ERROR);
         }
         // 2. 判断用户是否存在
-        if(!idExists(userUpdateDTO.getId())) {
+        if(Boolean.FALSE.equals(idExists(userUpdateDTO.getId()))) {
             throw new CustomException(CodeEnum.PARAM_ERROR, "用户不存在");
         }
     }
@@ -62,10 +62,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void validQueryData(UserQueryDTO userQueryDTO) {
         // 1. 如每次查询数量不可大于限定数量，可使用注解校验
-        /*long pageSize = userQueryDTO.getPageSize();
+        /* long pageSize = userQueryDTO.getPageSize();
         if(pageSize >= CommonConstant.PAGE_DATA_MAX_LIMIT) {
              userQueryDTO.setPageSize(CommonConstant.PAGE_DATA_MAX_LIMIT);
-        }*/
+        } */
     }
 
     @Override
@@ -138,7 +138,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Page<User> page(UserQueryDTO userQueryDTO) {
         // 1.创建分页对象
-        Page<User> userPage = new Page<User>(userQueryDTO.getPageNum(), userQueryDTO.getPageSize());
+        Page<User> userPage = new Page<>(userQueryDTO.getPageNum(), userQueryDTO.getPageSize());
         // 2.分页查询
         userPage = userMapper.selectByPage(userPage, userQueryDTO);
         // 3. 返回分页查询到的数据

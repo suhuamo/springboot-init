@@ -44,23 +44,23 @@ public class CustomException extends RuntimeException  {
 
     /**
      * 系统级别异常
-     * @param message
+     * @param message 错误消息
      * @return CustomException
      * @version 1.0
      * @author suhuamo
      */
-    public static CustomException ServerException(String message) {
+    public static CustomException serverException(String message) {
         return new CustomException(CodeEnum.SERVER_ERROR, message);
     }
 
     /**
      * 前端接口请求基本异常
-     * @param message
+     * @param message 错误消息
      * @return CustomException
      * @version 1.0
      * @author suhuamo
      */
-    public static CustomException QueryException(String message) {
+    public static CustomException queryException(String message) {
         return new CustomException(CodeEnum.PARAM_ERROR, message);
     }
 }

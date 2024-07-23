@@ -24,7 +24,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     /**
      * 空格字符
      */
-    private final String EMPTY_STRING = " ";
+    private static final String EMPTY_STRING = " ";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -43,7 +43,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             Claims claims = JwtUtil.parseClaims(token);
             if (claims != null) {
                 // 判断当前 token 是否过期
-                if(JwtUtil.isExpired(claims)) {
+                if(Boolean.TRUE.equals(JwtUtil.isExpired(claims))) {
                     throw new CustomException(CodeEnum.UNAUTHORIZED_EXPIRE);
                 }
                 // 设置当前登录用户的id

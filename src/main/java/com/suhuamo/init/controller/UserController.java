@@ -128,7 +128,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseResult<Boolean> deleteUserById(@PathVariable("id") Integer id) {
         // 1. 校验 id 是否存在
-        if(!userService.idExists(id)) {
+        if(Boolean.FALSE.equals(userService.idExists(id))) {
             return ResponseResult.error(CodeEnum.NOT_FOUND_ERROR);
         }
         // 2. 删除数据
@@ -186,7 +186,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseResult<UserVO> getUserById(@PathVariable("id") Integer id) {
         // 1. 校验数据
-        if(!userService.idExists(id)) {
+        if(Boolean.FALSE.equals(userService.idExists(id))) {
             return ResponseResult.error(CodeEnum.NOT_FOUND_ERROR);
         }
         // 2. 查询数据

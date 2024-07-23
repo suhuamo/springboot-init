@@ -42,8 +42,8 @@ public class CustomErrorController extends AbstractErrorController {
     /**
      *  处理浏览器的页面请求
      *  加上了异常日志记录
-     * @param request
-     * @param response
+     * @param request 请求
+     * @param response 响应
      * @return ModelAndView
      */
     @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
@@ -64,14 +64,14 @@ public class CustomErrorController extends AbstractErrorController {
      *  处理ajax请求
      *  修改返回类型： BaseResponse
      *  加上日常处理日志
-     * @param request
+     * @param request 请求
      * @return BaseResponse
      */
     @RequestMapping
     @ResponseBody
     public ResponseResult error(HttpServletRequest request) {
         StringBuffer requestURL = request.getRequestURL();
-        System.out.println(requestURL);
+        log.error("输入的错误路径：{}", requestURL.toString());
         HttpStatus status = this.getStatus(request);
         if (status == HttpStatus.NO_CONTENT) {
             return ResponseResult.error(CodeEnum.NO_CONTENT.getCode(), CodeEnum.NO_CONTENT.getDesc());

@@ -16,7 +16,7 @@ public class JwtUtil {
     /**
      *  签名私钥,默认值 y20160606t
      */
-    private static final String key = "y20160606t";
+    private static final String key = "yTANGTANG20160606tYUANYUAN";
     /**
      *  签名的有效时间，单位毫秒, 默认60分钟， 1000 * 60 * 60
      */

@@ -19,6 +19,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +40,7 @@ public class FileServiceImpl implements FileService {
     public void validUploadFile(MultipartFile multipartFile) {
         // 1：判断上传文件是否为空
         if (multipartFile.isEmpty()) {
-            throw CustomException.QueryException("不可上传空文件");
+            throw CustomException.queryException("不可上传空文件");
         }
     }
 
@@ -52,7 +53,7 @@ public class FileServiceImpl implements FileService {
             multipartFile.transferTo(new File(fileProperties.getImgAbsolutePath(), fileName));
             log.info("文件{}下载成功", fileName);
         } catch (IOException e) {
-            throw CustomException.ServerException(e.getMessage());
+            throw CustomException.serverException(e.getMessage());
         }
         return getFileUrl(fileName);
     }
@@ -105,25 +106,6 @@ public class FileServiceImpl implements FileService {
         return file;
     }
 
-    public static void main(String[] args) {
-        File file = new File("D:\\test\\test\\a.txt");
-        int idx = 0;
-        System.out.println("file.getAbsolutePath() = " + file.getAbsolutePath());
-        System.out.println("file.getName() = " + file.getName());
-        System.out.println("file.getParent() = " + file.getParent());
-        String name = file.getName();
-        String removeSuffix = removeSuffix(name);
-        String suffix = getSuffix(name);
-        while(FileUtil.fileExists(file.getAbsolutePath())) {
-            file = new File(file.getParent(), removeSuffix + "(" + (++idx) + ")" + suffix);
-        }
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      *  获取文件上传对象的文件名称
      * @param fileUploadDTO 文件上传对象
@@ -131,7 +113,7 @@ public class FileServiceImpl implements FileService {
      * @author suhuamo
      */
     private String getFileName(FileUploadDTO fileUploadDTO) {
-        return fileUploadDTO.getName() != null ? removeSuffix(fileUploadDTO.getName()) : removeSuffix(fileUploadDTO.getMultipartFile().getOriginalFilename());
+        return fileUploadDTO.getName() != null ? removeSuffix(fileUploadDTO.getName()) : removeSuffix(Objects.requireNonNull(fileUploadDTO.getMultipartFile().getOriginalFilename()));
     }
 
     /**

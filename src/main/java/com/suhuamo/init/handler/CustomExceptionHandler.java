@@ -3,7 +3,7 @@ package com.suhuamo.init.handler;
 import com.suhuamo.init.common.ResponseResult;
 import com.suhuamo.init.enums.CodeEnum;
 import com.suhuamo.init.exception.CustomException;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,6 +24,7 @@ import java.util.List;
  * 2.对异常统一处理
  */
 @ControllerAdvice
+@Slf4j
 public class CustomExceptionHandler {
 
     /**
@@ -38,11 +39,8 @@ public class CustomExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public ResponseResult error(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        e.printStackTrace();
-        System.out.println("e.getMessage() = " + e.getMessage());
-        System.out.println("e.getLocalizedMessage() = " + e.getLocalizedMessage());
-        System.out.println("e.getCause().getMessage() = " + e.getCause().getMessage());
+    public ResponseResult<Object> error(HttpServletRequest request, HttpServletResponse response, Exception e) {
+        log.error(e.getMessage());
         // 如果是自定义类型
         if (e.getClass() == CustomException.class) {
             //类型转型
