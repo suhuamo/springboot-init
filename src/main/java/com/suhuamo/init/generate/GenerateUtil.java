@@ -39,7 +39,7 @@ public class GenerateUtil {
      * @param generateProperties 自动生成代码需要的参数
      * @throws IOException
      */
-    public static void generatorCode(GenerateProperties generateProperties) throws IOException {
+    public static void generatorCode(GenerateProperties generateProperties) {
         // 生成mybatis-plus定义的文件
         createFastAutoGenerator(generateProperties);
         // 创建其他自定义文件
@@ -134,7 +134,7 @@ public class GenerateUtil {
      * @param entity
      * @return void
      */
-    private static void createOtherFile(String outputDir, String parent, String entity) throws IOException {
+    private static void createOtherFile(String outputDir, String parent, String entity) {
         // 将包名转换为目录格式
         String replace = parent.replace(".", "/");
         // 获取 entity 文件夹

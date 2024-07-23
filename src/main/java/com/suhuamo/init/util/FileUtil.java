@@ -1,7 +1,11 @@
 package com.suhuamo.init.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -10,6 +14,7 @@ import java.util.concurrent.ExecutorService;
  * @slogan 也许散落在浩瀚宇宙的小行星们也知道
  * 文件处理工具
  */
+@Slf4j
 public class FileUtil {
 
     /**
@@ -18,7 +23,7 @@ public class FileUtil {
      * @return String
      */
     public static String getResourceFilePath(String fileName) throws ClassNotFoundException {
-        return Class.forName(FileUtil.class.getName()).getClassLoader().getResource(fileName).getPath();
+        return Objects.requireNonNull(Class.forName(FileUtil.class.getName()).getClassLoader().getResource(fileName)).getPath();
     }
 
     /**
@@ -36,22 +41,22 @@ public class FileUtil {
      * @param path
      * @return String
      */
-    public static String readFile(String path) throws IOException {
+    public static String readFile(String path) {
         // 获取文件对象
         File file = new File(path);
         // 读取文件内容 (输入流)
-        FileInputStream out = new FileInputStream(file);
-        InputStreamReader isr = new InputStreamReader(out);
-        // 进入读取数据
-        String content = ""; // 返回文件的所有内容
-        int ch = 0; // 用来接收输入流的每一次数据
-        while ((ch = isr.read()) != -1) {
-            content += (char) ch;
+        try (InputStreamReader isr = new InputStreamReader(Files.newInputStream(file.toPath()))){
+            // 进入读取数据
+            StringBuilder content = new StringBuilder(); // 返回文件的所有内容
+            int ch = 0; // 用来接收输入流的每一次数据
+            while ((ch = isr.read()) != -1) {
+                content.append((char) ch);
+            }
+            return content.toString();
+        } catch (Exception e) {
+            log.error("读取文件内容失败：{}", e.getMessage());
+            return "";
         }
-        // 关闭流
-        isr.close();
-        out.close();
-        return content;
     }
 
 
