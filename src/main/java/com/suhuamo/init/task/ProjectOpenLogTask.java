@@ -16,7 +16,6 @@ import java.util.Objects;
  * @slogan 也许散落在浩瀚宇宙的小行星们也知道
  * 项目启动时执行任务,输出项目的基本信息
  */
-@Slf4j
 @Configuration
 public class ProjectOpenLogTask implements EnvironmentAware {
 
@@ -28,13 +27,12 @@ public class ProjectOpenLogTask implements EnvironmentAware {
         if(Objects.isNull(port)) {
             port = "8080";
         }
-        log.info("");
-        log.info("\n################## 项目启动成功 ####################"+
+        System.out.println("\n################## 项目启动成功 ####################"+
                 "\n----------------------------------------------------------\n\t" +
                 "本次启动的项目的访问地址:\n\t" +
                 "本机: \t\t http://localhost:" + port + "/\n\t" +
                 "外部访问: \t http://" + ip + ":" + port + "/\n\t" +
                 "Knife4j增强文档: \t http://localhost:" + port + "/doc.html\n" +
-                "----------------------------------------------------------");
+                "----------------------------------------------------------\n");
     }
 }

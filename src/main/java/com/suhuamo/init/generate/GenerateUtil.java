@@ -266,7 +266,7 @@ public class GenerateUtil {
                     String vo_line = line.replace(entity, entity + "." + directory);
                     updateContentList.add(vo_line);
                     // 添加校验需要的注解
-                    updateContentList.add("import javax.validation.constraints.NotEmpty;\n");
+                    updateContentList.add("import javax.validation.constraints.NotBlank;\n");
                     updateContentList.add("import javax.validation.constraints.NotNull;\n");
                 }
                 // 类名需要修改
@@ -310,7 +310,7 @@ public class GenerateUtil {
                 else if(line.startsWith("    private String")) {
                     String msgLine = updateContentList.get(updateContentList.size() - 2);
                     String msg = msgLine.replace(" ", "").replace("*", "").replace("\r", "");
-                    updateContentList.add("    @NotEmpty(message = \""+ msg + "不能为空\")\n");
+                    updateContentList.add("    @NotBlank(message = \""+ msg + "不能为空\")\n");
                     updateContentList.add(line);
                 }
                 // 如果是Integer类型，则加上Notnull
@@ -366,7 +366,7 @@ public class GenerateUtil {
                     String vo_line = line.replace(entity, entity + "." + directory);
                     addContentList.add(vo_line);
                     // 添加校验需要的注解
-                    addContentList.add("import javax.validation.constraints.NotEmpty;\n");
+                    addContentList.add("import javax.validation.constraints.NotBlank;\n");
                     addContentList.add("import javax.validation.constraints.NotNull;\n");
                 }
                 // 类名需要修改
@@ -417,7 +417,7 @@ public class GenerateUtil {
                 else if(line.startsWith("    private String")) {
                     String msgLine = addContentList.get(addContentList.size() - 2);
                     String msg = msgLine.replace(" ", "").replace("*", "").replace("\r", "");
-                    addContentList.add("    @NotEmpty(message = \""+ msg + "不能为空\")\n");
+                    addContentList.add("    @NotBlank(message = \""+ msg + "不能为空\")\n");
                     addContentList.add(line);
                 }
                 // 如果是Integer类型，则加上Notnull
