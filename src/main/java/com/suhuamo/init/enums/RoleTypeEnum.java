@@ -35,10 +35,10 @@ public enum RoleTypeEnum {
     /**
      * 根据类型获取枚举,当无该类型时，返回null
      *
-     * @param type
+     * @param type 类型
      * @return RoleTypeEnum
      */
-    public static RoleTypeEnum getByType(Integer type) {
+    public static RoleTypeEnum getByType(Byte type) {
         for (RoleTypeEnum itemEnum : RoleTypeEnum.values()) {
             if (itemEnum.getType().equals(type)) {
                 return itemEnum;
@@ -50,7 +50,7 @@ public enum RoleTypeEnum {
     /**
      * 根据描述获取枚举,当无该类型时，返回null
      *
-     * @param desc
+     * @param desc 描述
      * @return RoleTypeEnum
      */
     public static RoleTypeEnum getByDesc(String desc) {

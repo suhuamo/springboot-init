@@ -29,10 +29,10 @@ public enum SexEnum {
     /**
      * 根据类型获取枚举,当无该类型时，返回null
      *
-     * @param type
+     * @param type 类型
      * @return SexEnum
      */
-    public static SexEnum getByType(Integer type) {
+    public static SexEnum getByType(Byte type) {
         for (SexEnum itemEnum : SexEnum.values()) {
             if (itemEnum.getType().equals(type)) {
                 return itemEnum;
