@@ -3,7 +3,7 @@ package com.suhuamo.init.common;
 import lombok.Data;
 
 /**
- * 柱状图图表VO类
+ * 饼图图表VO类
  */
 @Data
 public class PieChartVO {
