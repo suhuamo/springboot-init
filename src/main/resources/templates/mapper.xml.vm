@@ -38,13 +38,13 @@
             #end
     </sql>
 
-    <select id="selectRealById" resultType="BaseResultMap">
+    <select id="selectRealById" resultMap="BaseResultMap">
         select *
         from ${table.name}
         where id = #{id}
     </select>
 
-    <select id="selectByPage" resultType="BaseResultMap">
+    <select id="selectByPage" resultMap="BaseResultMap">
 
     </select>
 </mapper>
