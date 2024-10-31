@@ -29,14 +29,22 @@
     <!-- 通用查询结果列 -->
     <!-- <include refid="BaseColumn"/> -->
     <sql id="BaseColumn">
-        #foreach($field in ${table.fields})
-            ${field.name},
-        #end
+            #foreach($field in ${table.fields})
+                #if($foreach.hasNext)
+                    ${field.name},
+                #else
+                    ${field.name}
+                #end
+            #end
     </sql>
 
-    <select id="selectRealById" resultType="${package.Entity}.${entity}">
+    <select id="selectRealById" resultType="BaseResultMap">
         select *
         from ${table.name}
         where id = #{id}
+    </select>
+
+    <select id="selectByPage" resultType="BaseResultMap">
+
     </select>
 </mapper>
