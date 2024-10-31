@@ -62,7 +62,7 @@ public class ${table.controllerName} {
      * @param ${table.entityPath}UpdateDTO 修改数据实体类
      * @return ResponseResult<${entity}>
      */
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseResult<${entity}VO> update${entity}ById(@Valid @RequestBody ${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
         // 1. 校验数据
         ${table.entityPath}Service.validUpdateData(${table.entityPath}UpdateDTO);
