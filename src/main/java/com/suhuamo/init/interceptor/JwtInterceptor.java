@@ -35,10 +35,14 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
         // 1.通过request获取请求token信息
         String authorization = request.getHeader(JwtUtil.AUTHORIZATION_TEXT);
-        //判断请求头信息是否为空，或者是否已Bearer开头
-        if (StringUtils.hasLength(authorization) && authorization.startsWith(JwtUtil.BEARER_TEXT)) {
-            //获取token数据
-            String token = authorization.replace(JwtUtil.BEARER_TEXT + EMPTY_STRING, "");
+        // 判断请求头信息是否为空
+        if (StringUtils.hasLength(authorization)) {
+            // 获取token数据
+            String token = authorization;
+            // 如果 token 以 bearer 开头，则去掉该字符串，截取真正的token
+            if(authorization.startsWith(JwtUtil.BEARER_TEXT)) {
+                token = authorization.replace(JwtUtil.BEARER_TEXT + EMPTY_STRING, "");
+            }
             //解析token获取claims
             Claims claims = JwtUtil.parseClaims(token);
             if (claims != null) {
