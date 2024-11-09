@@ -8,8 +8,8 @@ package com.suhuamo.init.enums;
  */
 public enum RoleTypeEnum {
     // admin-管理员；user-普通用户
-    ADMIN((byte) 1, "admin"),
-    USER((byte) 2, "user");
+    ADMIN((byte) 0, "admin"),
+    USER((byte) 1, "user");
     /**
      * 类型
      */
