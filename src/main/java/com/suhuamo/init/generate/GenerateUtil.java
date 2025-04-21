@@ -28,9 +28,9 @@ public class GenerateUtil {
     private static List<String> templatePath = new ArrayList<>();
 
     static {
-        templatePath.add("/templates"); // 最新版
+        //templatePath.add("/templates"); // 最新版
         templatePath.add("/templates/pojo"); // 只需要实体类版
-        templatePath.add("/templates/stand"); // 标准版
+        templatePath.add("/templates/standard"); // 标准版
     }
 
     /**
@@ -42,8 +42,11 @@ public class GenerateUtil {
     public static void generatorCode(GenerateProperties generateProperties) {
         // 生成mybatis-plus定义的文件
         createFastAutoGenerator(generateProperties);
-        // 创建其他自定义文件
-        createOtherFile(generateProperties.getOutputDirJava(), generateProperties.getParent(), generateProperties.getEntity());
+        // POJO模板不需要生成其他文件
+        if(!TemplateTypeEnum.POJO.equals(TemplateTypeEnum.getEnumByType(generateProperties.getTemplateType()))) {
+            // 创建其他自定义文件
+            createOtherFile(generateProperties.getOutputDirJava(), generateProperties.getParent(), generateProperties.getEntity());
+        }
     }
 
     /**
@@ -116,12 +119,12 @@ public class GenerateUtil {
                 })
                 // 当未配置模板路径时，先找 templates文件下有没有对应的，没有就用 mybatis 自带的
                 .templateConfig(builder -> {
-                    builder.controller(templatePath.get(templateType) + "/controller.java.vm");
-                    builder.entity(templatePath.get(templateType) + "/entity.java.vm");
-                    builder.mapper(templatePath.get(templateType) + "/mapper.java.vm");
-                    builder.xml(templatePath.get(templateType) + "/mapper.xml.vm");
-                    builder.service(templatePath.get(templateType) + "/service.java.vm");
-                    builder.serviceImpl(templatePath.get(templateType) + "/serviceImpl.java.vm");
+                    builder.controller(TemplateTypeEnum.getPathByType(templateType) + "/controller.java.vm");
+                    builder.entity(TemplateTypeEnum.getPathByType(templateType) + "/entity.java.vm");
+                    builder.mapper(TemplateTypeEnum.getPathByType(templateType) + "/mapper.java.vm");
+                    builder.xml(TemplateTypeEnum.getPathByType(templateType) + "/mapper.xml.vm");
+                    builder.service(TemplateTypeEnum.getPathByType(templateType) + "/service.java.vm");
+                    builder.serviceImpl(TemplateTypeEnum.getPathByType(templateType) + "/serviceImpl.java.vm");
                 })
                 .execute();
     }

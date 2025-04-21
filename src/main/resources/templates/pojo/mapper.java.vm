@@ -1,11 +1,8 @@
 package ${package.Mapper};
 
 import ${package.Entity}.${entity};
-import ${package.Entity}.dto.${table.entityPath}.${entity}QueryDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 
 /**
@@ -19,11 +16,4 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 @Mapper
 public interface ${table.mapperName}  extends BaseMapper<${entity}> {
 
-    /**
-     *  自定义分页查询
-     * @param ${table.entityPath}Page 分页对象
-     * @param ${table.entityPath}QueryDTO 分页查询条件
-     * @return Page<Person>
-     */
-    Page<${entity}> selectByPage(Page<${entity}> ${table.entityPath}Page, @Param("${table.entityPath}") ${entity}QueryDTO ${table.entityPath}QueryDTO);
 }

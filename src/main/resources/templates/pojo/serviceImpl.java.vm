@@ -1,20 +1,11 @@
 package ${package.ServiceImpl};
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.BeanUtils;
-import java.util.List;
-import java.util.stream.Collectors;
 import ${superServiceImplClassPackage};
 import ${package.Entity}.${entity};
-import ${package.Entity}.dto.${table.entityPath}.*;
-import ${package.Entity}.vo.${entity}VO;
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
-import com.suhuamo.init.constant.CommonConstant;
-import com.suhuamo.init.enums.CodeEnum;
-import com.suhuamo.init.exception.CustomException;
 /**
  * <p>
  * $!{table.comment} 业务实现类
@@ -28,115 +19,5 @@ public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, $
 
     @Autowired
     ${table.mapperName} ${table.entityPath}Mapper;
-
-
-    @Override
-    public void validAddData(${entity}AddDTO ${table.entityPath}AddDTO) {
-        // 1. 如姓名不能长度不能小于20，可使用注解校验
-    }
-
-    @Override
-    public void validUpdateData(${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
-        // 1. 如id不能为空，可以使用注解校验
-        /*if(${table.entityPath}UpdateDTO.getId() == null) {
-            throw new CustomException(CodeEnum.PARAM_ERROR);
-        }*/
-    }
-
-    @Override
-    public void validQueryData(${entity}QueryDTO ${table.entityPath}QueryDTO) {
-        // 1. 如每次查询数量不可大于限定数量，可使用注解校验
-        /*long pageSize = ${table.entityPath}QueryDTO.getPageSize();
-        if(pageSize >= CommonConstant.PAGE_DATA_MAX_LIMIT) {
-             ${table.entityPath}QueryDTO.setPageSize(CommonConstant.PAGE_DATA_MAX_LIMIT);
-        }*/
-    }
-
-    @Override
-    public Boolean idExists(Integer id) {
-        // 1. 查询数据
-        ${entity} ${table.entityPath} = ${table.entityPath}Mapper.selectById(id);
-        // 2. 返回结果
-        return ${table.entityPath} != null;
-    }
-
-    @Override
-    public ${entity} save(${entity}AddDTO ${table.entityPath}AddDTO) {
-        // 1. 转换为实体Pojo
-        ${entity} ${table.entityPath} = addDtoToPo(${table.entityPath}AddDTO);
-        // 2. 入库
-        ${table.entityPath}Mapper.insert(${table.entityPath});
-        // 3. 返回入库的数据
-        return ${table.entityPath};
-    }
-
-    @Override
-    public ${entity} update(${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
-        // 1. 转换为实体Pojo
-        ${entity} ${table.entityPath} = updateDtoToPo(${table.entityPath}UpdateDTO);
-        // 2. 入库
-        ${table.entityPath}Mapper.updateById(${table.entityPath});
-        // 3. 返回入库的数据
-        return ${table.entityPath};
-    }
-
-    @Override
-    public Page<${entity}> page(${entity}QueryDTO ${table.entityPath}QueryDTO) {
-        // 1.创建分页对象
-        Page<${entity}> ${table.entityPath}Page = new Page<${entity}>(${table.entityPath}QueryDTO.getPageNum(), ${table.entityPath}QueryDTO.getPageSize());
-        // 2.分页查询
-        ${table.entityPath}Page = ${table.entityPath}Mapper.selectByPage(${table.entityPath}Page, ${table.entityPath}QueryDTO);
-        // 3. 返回分页查询到的数据
-        return ${table.entityPath}Page;
-    }
-
-    /**
-     * 将addDto对象转换为po对象--标准化
-     * @param ${table.entityPath}AddDTO
-     * @return ${entity}
-     */
-    public ${entity} addDtoToPo(${entity}AddDTO ${table.entityPath}AddDTO) {
-        // 1. 创建实体
-        ${entity} ${table.entityPath} = new ${entity}();
-        // 2. 基础参数复制
-        BeanUtils.copyProperties(${table.entityPath}AddDTO, ${table.entityPath});
-        // 3. 其他业务参数处理后set
-        return ${table.entityPath};
-    }
-
-    /**
-     * 将updateDto对象转换为po对象--标准化
-     * @param ${table.entityPath}UpdateDTO
-     * @return ${entity}
-     */
-    public ${entity} updateDtoToPo(${entity}UpdateDTO ${table.entityPath}UpdateDTO) {
-        // 1. 创建实体
-        ${entity} ${table.entityPath} = new ${entity}();
-        // 2. 基础参数复制
-        BeanUtils.copyProperties(${table.entityPath}UpdateDTO, ${table.entityPath});
-        // 3. 其他业务参数处理后set
-        return ${table.entityPath};
-    }
-
-    @Override
-    public ${entity}VO poToVo(${entity} ${table.entityPath}) {
-        // 1. 创建实体
-        ${entity}VO ${table.entityPath}VO = new ${entity}VO();
-        // 2. 基础参数复制
-        BeanUtils.copyProperties(${table.entityPath}, ${table.entityPath}VO);
-        // 3. 其他业务参数处理后set
-        return ${table.entityPath}VO;
-    }
-
-
-    @Override
-    public List<${entity}VO> poToVo(List<${entity}> ${table.entityPath}List) {
-        return ${table.entityPath}List.stream().map(this::poToVo).collect(Collectors.toList());
-    }
-
-    @Override
-    public Page<${entity}VO> pageToVo(Page<${entity}> ${table.entityPath}Page) {
-        return (Page<${entity}VO>) ${table.entityPath}Page.convert(this::poToVo);
-    }
 
 }

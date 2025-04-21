@@ -12,7 +12,7 @@
 
     <groupId>com.suhuamo</groupId>
     <artifactId>springboot-init</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <description>
         springboot2.0,jdk1.8模板项目
     </description>

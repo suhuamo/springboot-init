@@ -56,11 +56,12 @@ public class GenerateProperties {
     private String outputDirResources = System.getProperty("user.dir") + "\\src\\main\\resources";
 
     /**
-     * 模板的三种类型。0：最新版；1：实体类版；2：标准版
+     * 模板的生成类型。
      * @version 1.0
      * @author suhuamo
+     * @with {@link TemplateTypeEnum}
      */
-    private int templateType = 0;
+    private int templateType = TemplateTypeEnum.POJO.getType();
     // endregion 全局配置参数
 
     // region 包路径参数
