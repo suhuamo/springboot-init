@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author suhuamo
@@ -52,9 +53,10 @@ public class CustomErrorController extends AbstractErrorController {
         Map<String, Object> model = Collections.unmodifiableMap(this.getErrorAttributes(request, this.getErrorAttributeOptions()));
         response.setStatus(status.value());
         ModelAndView modelAndView = this.resolveErrorView(request, response, status, model);
-        if(model.get(HttpConstant.TRACE_TEXT) != null) {
+        if(Objects.nonNull(model.get(HttpConstant.TRACE_TEXT))) {
             log.error("页面请求发生错误，错误原因为:" + model.get(HttpConstant.TRACE_TEXT).toString());
         } else {
+            //            todo:补充原因
             log.error("页面请求发生错误，错误原因为:...没有请求目标内容");
         }
         return modelAndView != null ? modelAndView : new ModelAndView(HttpConstant.ERROR_TEXT, model);
@@ -79,10 +81,11 @@ public class CustomErrorController extends AbstractErrorController {
         Map<String, Object> body = getErrorAttributes(request, getErrorAttributeOptions());
         String code = body.get(HttpConstant.STATUS_TEXT).toString();
         String message = body.get(HttpConstant.MESSAGE_TEXT).toString();
-        if(body.get(HttpConstant.TRACE_TEXT) != null) {
+        if(Objects.nonNull(body.get(HttpConstant.TRACE_TEXT))) {
             log.error("ajax请求发生错误，错误原因为:" + body.get(HttpConstant.TRACE_TEXT).toString());
         } else {
-            log.error("ajax请求发生错误，错误原因为:...没有请求目标内容");
+//            todo:补充原因
+            log.error("ajax请求发生错误");
         }
         return ResponseResult.error(Integer.parseInt(code), message);
     }
