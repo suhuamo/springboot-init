@@ -54,10 +54,10 @@ knife4j:
   enable: true
   openapi:
     title: Knife4j官方文档
-    description: "`本项目的接口文档"
-    email: suhuamo@foxmail.com
+    description: "`init项目的接口文档"
+    email: suhuamo@suhuamo.com
     concat: 苏花末
-    url: https://suhuamo.com
+    url: http://www.suhuamo.com
     version: v4.0
     license: Apache 2.0
     license-url: https://stackoverflow.com/
